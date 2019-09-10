@@ -1,0 +1,40 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Ejemplos Webpay Plus - Crear Transaccion</title>
+    {% include 'include/header.html' %}
+</head>
+
+<body class="container">
+    <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="#">Ejemplos Patpass webpay - Crear Transaccion</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Step: <strong>Create Transaction</strong></li>
+    </ol>
+    </nav>
+
+
+    <div class="alert alert-warning" role="alert">
+    <h3>request</h3>
+        {% for k, v in request.items() %}
+            {{ k }} = {{ v }},
+        {% endfor %}
+</div>
+    <div class="alert alert-primary" role="alert">
+    <h3>result</h3>
+    {{ response }}
+</div>
+<br>
+    <div class="alert alert-success" role="alert">
+        <p>Sesion iniciada con exito en Webpay patpass</p>
+    </div>
+<br>
+<form action="{{ response.url }}" method="POST">
+<input type="hidden" name="token_ws" value="{{ response.token }}">
+<input type="submit" value="Ejecutar Pago con Webpay">
+</form>
+<br>
+
+<a href="/">&laquo; volver a index</a>
+</body>
+</html>
