@@ -52,6 +52,17 @@ def patpass_webpay_create():
     return render_template('webpay/patpass/create.html', request=create_request, response=response)
 
 
+@app.route('/patpass-webpay/commit', methods=["POST"])
+def patpass_webpay_commit():
+    token = request.form.get("token_ws")
+    print("commit for token_ws: {}".format(token))
+
+    response = Transaction.commit(token=token)
+    print("response: {}".format(response))
+
+    return render_template('webpay/patpass/commit.html', token=token, response=response)
+
+
 if __name__ == '__main__':
     app.run()
 
