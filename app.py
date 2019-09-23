@@ -64,7 +64,7 @@ def patpass_webpay_commit():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0')
 
 
 def random_string(string_length=10):
