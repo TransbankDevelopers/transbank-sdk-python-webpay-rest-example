@@ -2,17 +2,18 @@ import string
 import random
 
 from flask import Flask, render_template, request
+from transbank.error.transbank_error import TransbankError
 from transbank.patpass_by_webpay.transaction import Transaction
 
 app = Flask(__name__)
 
 
-@app.route('/')
+@app.route("/")
 def hello_world():
     return render_template('index.html')
 
 
-@app.route('/patpass-webpay/create')
+@app.route("/patpass-webpay/create", methods=["GET"])
 def patpass_webpay_create():
     print("Patpass Webpay Transaction.create")
     buy_order = str(random.randrange(1000000, 99999999))
@@ -52,7 +53,7 @@ def patpass_webpay_create():
     return render_template('webpay/patpass/create.html', request=create_request, response=response)
 
 
-@app.route('/patpass-webpay/commit', methods=["POST"])
+@app.route("/patpass-webpay/commit", methods=["POST"])
 def patpass_webpay_commit():
     token = request.form.get("token_ws")
     print("commit for token_ws: {}".format(token))
@@ -61,6 +62,22 @@ def patpass_webpay_commit():
     print("response: {}".format(response))
 
     return render_template('webpay/patpass/commit.html', token=token, response=response)
+
+
+@app.route("/patpass-webpay/status-form", methods=["GET"])
+def patpass_webpay_status_form():
+    return render_template("webpay/patpass/status-form.html")
+
+
+@app.route("/patpass-webpay/status", methods=["POST"])
+def patpass_webpay_status():
+    token = request.form.get("token_ws")
+    try:
+        response = Transaction.status(token)
+        print(response)
+        return render_template("webpay/patpass/status.html", token=token, response=response)
+    except TransbankError as e:
+        print(e.message)
 
 
 if __name__ == '__main__':
