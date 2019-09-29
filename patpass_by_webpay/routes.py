@@ -1,14 +1,11 @@
 import string
 import random
-from flask import render_template, request, app
+from patpass_by_webpay import bp
+from flask import render_template, request
+from transbank.patpass_by_webpay.transaction import Transaction
 
 
-@app.route('/')
-def hello_world():
-    return render_template('index.html')
-
-
-@app.route('/patpass-webpay/create')
+@bp.route('create')
 def patpass_webpay_create():
     print("Patpass Webpay Transaction.create")
     buy_order = str(random.randrange(1000000, 99999999))
@@ -48,7 +45,7 @@ def patpass_webpay_create():
     return render_template('webpay/patpass/create.html', request=create_request, response=response)
 
 
-@app.route('/patpass-webpay/commit', methods=["POST"])
+@bp.route('commit', methods=["POST"])
 def patpass_webpay_commit():
     token = request.form.get("token_ws")
     print("commit for token_ws: {}".format(token))
@@ -57,10 +54,6 @@ def patpass_webpay_commit():
     print("response: {}".format(response))
 
     return render_template('webpay/patpass/commit.html', token=token, response=response)
-
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0')
 
 
 def random_string(string_length=10):

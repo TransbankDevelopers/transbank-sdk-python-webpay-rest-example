@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint, Config
+from flask import Flask, Config, app, render_template
 import os
 
 APP_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -9,14 +9,17 @@ def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
 
+
+
     from transaccion_completa import bp as transaccion_completa_bp
+    from patpass_by_webpay import bp as patpass_by_webpay_bp
+
     app.register_blueprint(transaccion_completa_bp, url_prefix='/transaccion_completa')
+    app.register_blueprint(patpass_by_webpay_bp, url_prefix='/patpass-webpay')
 
-    # from main.auth import bp as auth_bp
-    # main.register_blueprint(auth_bp, url_prefix='/auth')
-
-    # from main.main import bp as main_bp
-    #  main.register_blueprint(main_bp)
+    @app.route('/')
+    def hello_world():
+        return render_template('index.html')
 
     return app
 
