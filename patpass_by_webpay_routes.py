@@ -1,10 +1,6 @@
 import string
 import random
-
-from flask import Flask, render_template, request
-from transbank.patpass_by_webpay.transaction import Transaction
-
-app = Flask(__name__)
+from flask import render_template, request, app
 
 
 @app.route('/')
