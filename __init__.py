@@ -13,9 +13,9 @@ def create_app(config_class=Config):
     from patpass_by_webpay import bp as patpass_by_webpay_bp
     from transaccion_completa_mall import bp as transaccion_completa_mall_bp
 
-    app.register_blueprint(transaccion_completa_bp, url_prefix='/transaccion_completa')
+    app.register_blueprint(transaccion_completa_bp, url_prefix='/fulltransaction')
     app.register_blueprint(patpass_by_webpay_bp, url_prefix='/patpass-webpay')
-    app.register_blueprint(transaccion_completa_mall_bp, url_prefix='/transaccion_completa/mall')
+    app.register_blueprint(transaccion_completa_mall_bp, url_prefix='/mallfulltransaction/')
 
     @app.route('/')
     def hello_world():

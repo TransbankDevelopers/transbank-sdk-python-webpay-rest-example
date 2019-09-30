@@ -7,7 +7,7 @@
 {{ resp }}
 
 <h1>Confirmar transacción</h1>
-<form class="transaccion_completa_form" action="/transaccion_completa/mall/commit" method="post" style="display: flex; flex-direction:column; width:50%;font-size: 20px;">
+<form class="transaccion_completa_form" action="/mallfulltransaction/commit" method="post" style="display: flex; flex-direction:column; width:50%;font-size: 20px;">
 
   <label for="token">Token</label>
   <input name="token" value="{{ req.get('token') }}">
