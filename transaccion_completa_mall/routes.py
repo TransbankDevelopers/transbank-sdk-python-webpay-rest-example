@@ -38,7 +38,8 @@ def send_create():
         card_number=card_number, card_expiration_date=card_expiration_date, details=details
     )
 
-    return render_template('transaccion_completa_mall/created.html', resp=resp, req=request.form, dt=dt, details=details)
+    return render_template('transaccion_completa_mall/created.html', resp=resp, req=request.form, dt=dt,
+                           details=details)
 
 
 @bp.route('installments', methods=['POST'])
@@ -102,5 +103,11 @@ def refund():
     req = request.form
     token = req.get('token')
     amount = req.get('amount')
-    resp = Transaction.refund(token=token, amount=amount)
+    print("TOKEN \n")
+    print(token)
+    child_buy_order = req.get('child_buy_order')
+    child_commerce_code = req.get('child_commerce_code')
+    resp = Transaction.refund(token=token, amount=amount, child_commerce_code=child_commerce_code,
+                              child_buy_order=child_buy_order)
+
     return render_template('/transaccion_completa_mall/transaction_refunded.html', req=req, resp=resp)
