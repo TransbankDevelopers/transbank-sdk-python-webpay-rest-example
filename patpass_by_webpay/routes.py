@@ -1,5 +1,6 @@
 import string
 import random
+from transbank.error.transbank_error import TransbankError
 from patpass_by_webpay import bp
 from flask import render_template, request
 from transbank.patpass_by_webpay.transaction import Transaction
@@ -54,6 +55,22 @@ def patpass_webpay_commit():
     print("response: {}".format(response))
 
     return render_template('webpay/patpass/commit.html', token=token, response=response)
+
+
+@app.route("status-form", methods=["GET"])
+def patpass_webpay_status_form():
+    return render_template("webpay/patpass/status-form.html")
+
+
+@app.route("status", methods=["POST"])
+def patpass_webpay_status():
+    token = request.form.get("token_ws")
+    try:
+        response = Transaction.status(token)
+        print(response)
+        return render_template("webpay/patpass/status.html", token=token, response=response)
+    except TransbankError as e:
+        print(e.message)
 
 
 def random_string(string_length=10):
