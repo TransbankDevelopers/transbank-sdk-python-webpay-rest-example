@@ -44,9 +44,6 @@ def commit():
     deferred_period_index = request.form.get('deferred_period_index')
     grace_period = request.form.get('grace_period') != 'false'
 
-    print("GRACE PERIOD \n")
-    print(grace_period)
-
     resp = Transaction.commit(token=token,
                               id_query_installments=id_query_installments,
                               deferred_period_index=deferred_period_index,
