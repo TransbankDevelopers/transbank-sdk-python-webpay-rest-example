@@ -1,0 +1,40 @@
+<h1>Ejemplo transaccion completa cuotas consultadas</h1>
+
+<h2>Request</h2>
+{{ req }}
+
+<h2>Response</h2>
+{{ resp }}
+
+<h1>Confirmar transacción</h1>
+<form class="transaccion_completa_form" action="/fulltransaction/commit" method="post" style="display: flex; flex-direction:column; width:50%;font-size: 20px;">
+  <label for="token">Token</label>
+  <input id="token" name="token" value="{{ req.get('token') }}">
+
+  <label for="id_query_installments">Id de la consulta de cuotas</label>
+  <input id="id_query_installments" value="{{ resp.id_query_installments }}">
+
+  <label for="deferred_period_index">Indice de periodo diferido</label>
+  <select id="deferred_period_index" name="deferred_period_index">
+     {% for def_period, index in resp.deferred_periods  %}
+      {%   if(index == 0) %}
+        <option value="{{ def_period.period }}" selected="selected">
+          {{ def_period.period }}
+        </option>
+      {%  else %}
+        <option value="{{ def_period.period }}">
+          {{ def_period.period }}
+        </option>
+      {% endif %}
+    {% endfor %}
+  </select>
+
+  <label for="grace_period">Periodo de gracia</label>
+  <select id="grace_period" name="grace_period">
+    <option value="true">true</option>
+    <option value="false" selected="selected">false</option>
+  </select>
+
+  <button type="submit">Enviar</button>
+
+</form>

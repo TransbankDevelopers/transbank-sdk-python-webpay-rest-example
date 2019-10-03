@@ -1,0 +1,31 @@
+<body>
+<h1>Ejemplo Transaccion completa: Transacción creada exitosamente</h1>
+
+<h2>Request</h2>
+{{ req }}
+
+<h2>Response</h2>
+{{ resp }}
+
+<h1>Consultar installments</h1>
+<form class="transaccion_completa_form" action="/fulltransaction/installments" method="post" style="display: flex; flex-direction:column; width:50%;font-size: 20px;">
+  <span>Token: {{ resp.token }} </span>
+  <input type="hidden" name="token" value="{{ resp.token }}">
+
+  <label for="installments_number">Número de cuotas</label>
+  <select id="installments_number" name="installments_number">
+    <option>2</option>
+    <option selected="selected">3</option>
+    <option>4</option>
+    <option>5</option>
+    <option>6</option>
+    <option>7</option>
+    <option>8</option>
+    <option>9</option>
+    <option>10</option>
+    <option>11</option>
+    <option>12</option>
+  </select>
+  <button type="submit">Enviar</button>
+</form>
+</body>
