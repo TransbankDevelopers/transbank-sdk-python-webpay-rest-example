@@ -16,7 +16,7 @@ def create_app(config_class=Config):
     app.register_blueprint(patpass_by_webpay_bp, url_prefix='/patpass-webpay')
 
     @app.route('/')
-    def hello_world():
+    def index():
         return render_template('index.html')
 
     return app
