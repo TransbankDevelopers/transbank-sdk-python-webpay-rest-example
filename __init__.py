@@ -18,7 +18,7 @@ def create_app(config_class=Config):
     app.register_blueprint(transaccion_completa_mall_bp, url_prefix='/mallfulltransaction/')
 
     @app.route('/')
-    def hello_world():
+    def index():
         return render_template('index.html')
 
     return app
