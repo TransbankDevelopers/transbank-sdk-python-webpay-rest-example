@@ -33,7 +33,7 @@ def installments():
     token = request.form.get('token')
     installments_number = request.form.get('installments_number')
     resp = Transaction.installments(token=token, installments_number=installments_number)
-    return render_template('/transaccion_completa/installments.html', req=req, resp=resp)
+    return render_template('transaccion_completa/installments.html', req=req, resp=resp)
 
 
 @bp.route('commit', methods=['POST'])
@@ -48,14 +48,14 @@ def commit():
                               id_query_installments=id_query_installments,
                               deferred_period_index=deferred_period_index,
                               grace_period=grace_period)
-    return render_template('/transaccion_completa/transaction_committed.html', req=req, resp=resp)
+    return render_template('transaccion_completa/transaction_committed.html', req=req, resp=resp)
 
 
 @bp.route('status/<token>', methods=['GET'])
 def status(token):
     req = request.form
     resp = Transaction.status(token=token)
-    return render_template('/transaccion_completa/transaction_status.html', req=req, resp=resp)
+    return render_template('transaccion_completa/transaction_status.html', req=req, resp=resp)
 
 
 @bp.route('refund', methods=['POST'])
@@ -64,4 +64,4 @@ def refund():
     token = req.get('token')
     amount = req.get('amount')
     resp = Transaction.refund(token=token, amount=amount)
-    return render_template('/transaccion_completa/transaction_refunded.html', req=req, resp=resp)
+    return render_template('transaccion_completa/transaction_refunded.html', req=req, resp=resp)
