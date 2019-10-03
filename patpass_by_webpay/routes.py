@@ -57,12 +57,12 @@ def patpass_webpay_commit():
     return render_template('webpay/patpass/commit.html', token=token, response=response)
 
 
-@app.route("status-form", methods=["GET"])
+@bp.route("status-form", methods=["GET"])
 def patpass_webpay_status_form():
     return render_template("webpay/patpass/status-form.html")
 
 
-@app.route("status", methods=["POST"])
+@bp.route("status", methods=["POST"])
 def patpass_webpay_status():
     token = request.form.get("token_ws")
     try:
