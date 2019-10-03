@@ -7,7 +7,7 @@ from datetime import timedelta
 
 @bp.route('create', methods=['GET'])
 def show_create():
-    return render_template('/transaccion_completa/create.html', dt=dt, timedelta=timedelta)
+    return render_template('transaccion_completa/create.html', dt=dt, timedelta=timedelta)
 
 
 @bp.route('create', methods=['POST'])
