@@ -1,2 +1,2 @@
 Flask==1.1.1
-/transbank-sdk-python
+/Users/iescaida/Documents/workspace/tbk/transbank-sdk-python
