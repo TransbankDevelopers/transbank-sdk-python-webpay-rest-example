@@ -1,12 +1,13 @@
 import string
 import random
 from transbank.error.transbank_error import TransbankError
+from transbank.patpass_comercio.inscription import Inscription
+
 from patpass_comercio import bp
 from flask import render_template, request
-from transbank.patpass_comercio.transaction import Transaction
 
 
-@bp.route('inscription')
+@bp.route('start')
 def patpass_comercio_inscription():
     print("Patpass Comercio Transaction.inscription")
     name = 'nombre'
@@ -43,13 +44,13 @@ def patpass_comercio_inscription():
         'city': city,
     }
 
-    response = Transaction.inscription(return_url, name, first_last_name, second_last_name, rut, service_id, final_url,
+    response = Inscription.start(return_url, name, first_last_name, second_last_name, rut, service_id, final_url,
                                        max_amount, phone_number, mobile_number, patpass_name,
                                        person_email, commerce_mail, address, city)
 
     print(response)
 
-    return render_template('patpass_comercio/inscription.html', request=inscription_request, response=response)
+    return render_template('patpass_comercio/start_inscription.html', request=inscription_request, response=response)
 
 
 @bp.route('end-inscription', methods=["POST"])
@@ -57,14 +58,14 @@ def patpass_comercio_end_inscription():
     token = request.form.get("j_token")
     print("commit for token_ws: {}".format(token))
 
-    return render_template('patpass_comercio/finish-inscription.html', token=token)
+    return render_template('patpass_comercio/finish_inscription.html', token=token)
 
 
 @bp.route("status", methods=["POST"])
 def patpass_comercio_status():
     token = request.form.get("tokenComercio")
     try:
-        response = Transaction.status(token)
+        response = Inscription.status(token)
         print(response)
         return render_template("patpass_comercio/status.html", token=token, response=response)
     except TransbankError as e:
@@ -73,7 +74,7 @@ def patpass_comercio_status():
 
 @bp.route('voucher-generated', methods=["POST"])
 def patpass_comercio_voucher_generated():
-    return render_template('patpass_comercio/voucher-displayed.html')
+    return render_template('patpass_comercio/voucher_displayed.html')
 
 
 def random_string(string_length=10):
