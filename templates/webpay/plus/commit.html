@@ -6,27 +6,27 @@
 </head>
 
 <body class="container">
-    <nav aria-label="breadcrumb">
+<nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="#">Ejemplo Webpay Plus - Confirmar Transacci&oacute;n</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Step: Commit Transaction</li>
+        <li class="breadcrumb-item"><a href="#">Ejemplo Webpay Plus - Confirmar Transacci&oacute;n</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Step: Commit Transaction</li>
     </ol>
-    </nav>
+</nav>
 
 <div class="alert alert-warning" role="alert">
-<h3>request</h3>
-token_ws: {{ token }}
+    <h3>request</h3>
+    token_ws: {{ token }}
 </div>
 <div class="alert alert-primary" role="alert">
-<h3>result</h3>
-{{ response }}
+    <h3>result</h3>
+    {{ response }}
 </div>
 <p><samp>Pago ACEPTADO por webpay</samp></p>
 <br>
-<form action="/patpass-webpay/refund" method="POST">
-<input type="hidden" name="token_ws" value="{{ token }}">
-<input type="hidden" name="amount" value="{{ response.amount }}">
-<input type="submit" class="btn btn-success" value="Reembolsar Transacci&oacute;n (Anular)">
+<form action="/webpay-plus/refund" method="POST">
+    <input type="hidden" name="token_ws" value="{{ token }}">
+    <input type="hidden" name="amount" value="{{ response.amount }}">
+    <input type="submit" class="btn btn-success" value="Reembolsar Transacci&oacute;n (Anular)">
 </form>
 <a href="/">&laquo; volver a index</a>
 </body>

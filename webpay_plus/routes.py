@@ -1,6 +1,7 @@
 import random
 
 from flask import render_template, request
+from transbank.error.transbank_error import TransbankError
 from transbank.webpay.webpay_plus.transaction import Transaction
 
 from webpay_plus import bp
@@ -28,7 +29,7 @@ def webpay_plus_create():
     return render_template('webpay/plus/create.html', request=create_request, response=response)
 
 
-@bp.route('commit', methods=["POST"])
+@bp.route("commit", methods=["POST"])
 def webpay_plus_commit():
     token = request.form.get("token_ws")
     print("commit for token_ws: {}".format(token))
@@ -37,3 +38,23 @@ def webpay_plus_commit():
     print("response: {}".format(response))
 
     return render_template('webpay/plus/commit.html', token=token, response=response)
+
+
+@bp.route("refund", methods=["POST"])
+def webpay_plus_refund():
+    token = request.form.get("token_ws")
+    amount = request.form.get("amount")
+    print("refund for token_ws: {} by amount: {}".format(token, amount))
+
+    try:
+        response = Transaction.refund(token, amount)
+        print("response: {}".format(response))
+
+        return render_template("webpay/plus/refund.html", token=token, amount=amount, response=response)
+    except TransbankError as e:
+        print(e.message)
+
+
+@bp.route("refund-form", methods=["GET"])
+def webpay_plus_refund_form():
+    return render_template("webpay/plus/refund-form.html")
