@@ -1,0 +1,29 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Ejemplo Webpay - ReembolsarTransacci&oacute;n</title>
+    {% include 'include/header.html' %}
+</head>
+
+<body class="container">
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Ejemplos Webpay - Reembolsar Transacci&oacute;nn</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Step: Refund</li>
+    </ol>
+</nav>
+
+<div class="alert alert-warning" role="alert">
+    <h3>request</h3>
+    token_ws: {{ token }}, amount: {{ amount }}
+</div>
+<div class="alert alert-primary" role="alert">
+    <h3>result</h3>
+    {{ response }}
+</div>
+<br>
+<p><samp>Reembolso realizado con exito.</samp></p>
+<br>
+<a href="/">&laquo; volver a index</a>
+</body>
+</html>
