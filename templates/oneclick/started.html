@@ -1,0 +1,33 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Ejemplo Oneclick Mall - Inscripcion iniciada</title>
+    {% include 'include/header.html' %}
+</head>
+
+<body class="container">
+    <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="#">Ejemplo Oneclick Mall - Inscripcion iniciada</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Step: Inscription started</li>
+    </ol>
+    </nav>
+
+<div class="alert alert-warning" role="alert">
+<h3>request</h3>
+{{ req }}
+</div>
+<div class="alert alert-primary" role="alert">
+<h3>result</h3>
+{{ resp }}
+</div>
+<br>
+
+<form class="transaccion_completa_form" action="{{ resp.url_webpay }}" method="post" style="display: flex; flex-direction:column; width:50%;font-size: 20px;">
+  <input type="hidden" name="TBK_TOKEN" value="{{ resp.token }}">
+
+  <button class="btn btn-primary" type="submit">Pagar</button>
+</form>
+<a href="/">&laquo; volver a index</a>
+</body>
+</html>

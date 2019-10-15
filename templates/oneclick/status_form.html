@@ -1,0 +1,26 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Ejemplo Oneclick Mall - Iniciar Inscripcion</title>
+    {% include 'include/header.html' %}
+</head>
+
+<body class="container">
+    <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="#">Ejemplo Oneclick Mall - Iniciar Inscripcion</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Step: Iniciar Inscription</li>
+    </ol>
+    </nav>
+
+<form action="/oneclick-mall/status" method="post" style="display: flex; flex-direction:column; width:50%;font-size: 20px;">
+  <div class="form-group">
+      <label for="buy_order">Buy Order</label>
+      <input class="form-control" id="buy_order" name="buy_order" value="" />
+  </div>
+  <button class="btn btn-primary" type="submit">Get Status</button>
+</form>
+</form>
+<a href="/">&laquo; volver a index</a>
+</body>
+</html>
