@@ -24,10 +24,10 @@
 
 <br>
 <form action="/oneclick-mall/authorize" method="POST">
-    <input type="hidden" name="token" value="{{ resp.tbk_user }}">
+    <input type="hidden" name="tbk_user" value="{{ resp.tbk_user }}">
     <input type="hidden" name="user_name" value="username">
     <input type="hidden" id="buy_order" name="buy_order" value="{{ buy_order }}">
-    <input type="hidden" id="token_inscription" name="token_inscription" value="{{ token }}">
+
 
     <h3>Comercio 1</h3>
   <hr>
