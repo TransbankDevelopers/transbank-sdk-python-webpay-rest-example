@@ -12,6 +12,7 @@ from transbank.webpay.webpay_plus.request import MallTransactionCreateDetails
 
 @bp.route('create', methods=['GET'])
 def show_create():
+    print('123123123123131231231231312')
     return render_template('/webpay/plus_mall/create.html', dt=dt, timedelta=timedelta,
                            child_commerce_codes=child_commerce_codes)
 
@@ -20,6 +21,7 @@ def send_create():
     buy_order = request.form.get('buy_order')
     session_id = request.form.get('session_id')
     return_url = request.url_root + 'webpay-plus-mall/commit'
+    
     commerce_code_child_1 = request.form.get('details[0][commerce_code]')
     buy_order_child_1= request.form.get('details[0][buy_order]')
     amount_child_1 = request.form.get('details[0][amount]')
@@ -41,3 +43,13 @@ def send_create():
     print (resp)
     return render_template('/webpay/plus_mall/created.html', details=details,
                            resp=resp)
+
+@bp.route("commit", methods=["POST"])
+def webpay_plus_commit():
+    token = request.form.get("token_ws")
+    print("commit for token_ws: {}".format(token))
+
+    response = MallTransaction.commit(token=token)
+    print("response: {}".format(response))
+
+    return render_template('/webpay/plus_mall/commit.html', token=token, response=response)
