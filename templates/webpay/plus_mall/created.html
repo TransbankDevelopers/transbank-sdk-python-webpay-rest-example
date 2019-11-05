@@ -19,10 +19,10 @@
   </div>
   <div class="alert alert-primary" role="alert">
     <h3>Response</h3>
-    {{ resp }}
+    {{ response }}
   </div>
-  <form action="{{ resp.url }}" method="POST">
-    <input type="hidden" name="token_ws" value="{{ resp.token }}">
+  <form action="{{ response.url }}" method="POST">
+    <input type="hidden" name="token_ws" value="{{ response.token }}">
     <input type="submit" value="Ejecutar Pago con Webpay">
   </form>
 
