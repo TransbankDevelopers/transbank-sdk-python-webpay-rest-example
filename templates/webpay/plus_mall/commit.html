@@ -1,0 +1,70 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Ejemplo Webpay Plus Mall - Confirmar Transacci&oacute;n</title>
+    {% include 'include/header.html' %}
+</head>
+
+<body class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Ejemplo Webpay Plus Mall - Confirmar Transacci&oacute;n</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Step: Commit Transaction</li>
+        </ol>
+    </nav>
+
+    <div class="alert alert-warning" role="alert">
+        <h3>Request</h3>
+        token_ws: {{ token }}
+    </div>
+    <div class="alert alert-primary" role="alert">
+        <h3>Result</h3>
+        {{ response }}
+    </div>
+    <br>
+    <div class='row'>
+        <form action="/webpay-plus-mall/refund" method="POST" class='.col-md-6' style="margin: 0px 100px;">
+            <div class="form-group">
+                <label for="details_buy_order">Token</label>
+                <input type="text" name="token_ws" value="{{ token }}" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="details_buy_order">Amount</label>
+                <input type="text" name="amount" value="{{ response.details[0].amount }}" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="details_buy_order">Commerce Code</label>
+                <input type="text" name="commerce_code" value="{{ response.details[0].commerce_code }}"
+                    class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="details_buy_order">Buy Order</label>
+                <input type="text" name="buy_order" value="{{ response.details[0].buy_order }}" class="form-control">
+            </div>
+            <input type="submit" class="btn btn-success" value="Reembolsar Transacci&oacute;n">
+        </form>
+
+        <form action="/webpay-plus-mall/refund" method="POST" class='.col-md-6' style="margin: 0px 100px;">
+            <div class="form-group">
+                <label for="details_buy_order">Token</label>
+                <input type="text" name="token_ws" value="{{ token }}" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="details_buy_order">Amount</label>
+                <input type="text" name="amount" value="{{ response.details[1].amount }}" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="details_buy_order">Commerce Code</label>
+                <input type="text" name="commerce_code" value="{{ response.details[1].commerce_code }}"
+                    class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="details_buy_order">Buy Order</label>
+                <input type="text" name="buy_order" value="{{ response.details[1].buy_order }}" class="form-control">
+            </div>
+            <input type="submit" class="btn btn-success" value="Reembolsar Transacci&oacute;n">
+        </form>
+    </div>
+    <a href="/">&laquo; Volver a index</a>
+</body>
+</html>
