@@ -5,7 +5,7 @@ from transbank.error.transbank_error import TransbankError
 from datetime import datetime as dt
 from datetime import timedelta
 from webpay_plus_mall import bp
-from transbank.transaccion_completa_mall import child_commerce_codes
+from transbank.webpay.webpay_plus import child_commerce_codes
 from transbank.webpay.webpay_plus.mall_transaction import MallTransaction
 from transbank.webpay.webpay_plus.request import MallTransactionCreateDetails
 
