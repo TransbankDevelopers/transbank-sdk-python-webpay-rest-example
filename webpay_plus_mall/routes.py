@@ -32,16 +32,16 @@ def send_create():
     details = MallTransactionCreateDetails(amount_child_1, commerce_code_child_1, buy_order_child_1) \
             .add(amount_child_2, commerce_code_child_2, buy_order_child_2)
 
-    resp = MallTransaction.create(
+    response = MallTransaction.create(
         buy_order=buy_order,
         session_id=session_id,
         return_url=return_url,
         details = details,
     )
     
-    print (resp)
+    print (response)
     return render_template('/webpay/plus_mall/created.html', details=details,
-                           resp=resp)
+                           response=response)
 
 @bp.route("commit", methods=["POST"])
 def webpay_plus_commit():
@@ -55,8 +55,7 @@ def webpay_plus_commit():
 
 @bp.route('refund-form', methods=['GET'])
 def refund_form():
-    return render_template('/webpay/plus_mall/refund-form.html', dt=dt, timedelta=timedelta,
-                           child_commerce_codes=child_commerce_codes)
+    return render_template('/webpay/plus_mall/refund-form.html')
 
 @bp.route("refund", methods=["POST"])
 def webpay_plus__mall_refund():
@@ -72,5 +71,19 @@ def webpay_plus__mall_refund():
         print("response: {}".format(response))
 
         return render_template("webpay/plus_mall/refund.html", token=token, amount=amount, response=response)
+    except TransbankError as e:
+        print(e.message)
+
+@bp.route("status-form", methods=["GET"])
+def patpass_webpay_status_form():
+    return render_template("webpay/plus_mall/status-form.html")
+
+
+@bp.route("status", methods=["POST"])
+def patpass_webpay_status():
+    token = request.form.get("token_ws")
+    try:
+        response = MallTransaction.status(token)
+        return render_template("webpay/plus_mall/status.html", token=token, response=response)
     except TransbankError as e:
         print(e.message)
