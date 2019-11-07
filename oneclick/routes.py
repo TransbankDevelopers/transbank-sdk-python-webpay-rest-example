@@ -8,12 +8,12 @@ from transbank.oneclick.mall_transaction import MallTransaction
 import random
 
 
-@bp.route('start-form', methods=['GET'])
+@bp.route('start', methods=['GET'])
 def show_start():
     return render_template('/oneclick/start.html')
 
 
-@bp.route('status-form', methods=['GET'])
+@bp.route('status', methods=['GET'])
 def show_status():
     return render_template('/oneclick/status_form.html')
 
@@ -41,8 +41,11 @@ def finish():
     buy_order_1 = str(random.randrange(1000000, 99999999))
     buy_order_2 = str(random.randrange(1000000, 99999999))
     buy_order = str(random.randrange(1000000, 99999999))
+    commerce_code_1 = '597055555542'
+    commerce_code_2 = '597055555543'
     return render_template('oneclick/authorize.html', req=req, resp=resp, buy_order_1=buy_order_1,
-                           buy_order_2=buy_order_2, buy_order=buy_order, token=token)
+                           buy_order_2=buy_order_2, buy_order=buy_order, token=token, commerce_code_1=commerce_code_1,
+                           commerce_code_2=commerce_code_2)
 
 
 @bp.route('authorize', methods=['POST'])
