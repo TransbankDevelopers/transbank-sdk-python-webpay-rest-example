@@ -5,7 +5,7 @@ from transbank.error.transbank_error import TransbankError
 from datetime import datetime as dt
 from datetime import timedelta
 from webpay_plus_mall import bp
-from transbank.webpay.webpay_plus import child_commerce_codes
+from transbank.webpay.webpay_plus import mall_default_child_commerce_codes
 from transbank.webpay.webpay_plus.mall_transaction import MallTransaction
 from transbank.webpay.webpay_plus.request import MallTransactionCreateDetails
 
@@ -13,7 +13,7 @@ from transbank.webpay.webpay_plus.request import MallTransactionCreateDetails
 @bp.route('create', methods=['GET'])
 def show_create():
     return render_template('/webpay/plus_mall/create.html', dt=dt, timedelta=timedelta,
-                           child_commerce_codes=child_commerce_codes)
+                           child_commerce_codes=mall_default_child_commerce_codes)
 
 @bp.route('create', methods=['POST'])
 def send_create():
