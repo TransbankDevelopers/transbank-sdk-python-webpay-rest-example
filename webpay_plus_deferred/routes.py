@@ -2,7 +2,7 @@ import random
 
 from flask import render_template, request
 from transbank.error.transbank_error import TransbankError
-from transbank.webpay.webpay_plus.transaction_deferred import DeferredTransaction
+from transbank.webpay.webpay_plus.deferred_transaction import DeferredTransaction
 
 from webpay_plus_deferred import bp
 
@@ -62,3 +62,20 @@ def webpay_plus_deferred_capture():
     print("response: {}".format(response))
 
     return render_template('webpay/plus_deferred/capture.html', token=token, response=response)
+
+@bp.route("refund", methods=["POST"])
+def webpay_plus_refund():
+    token = request.form.get("token_ws")
+    amount = request.form.get("amount")
+    print("refund for token_ws: {} by amount: {}".format(token, amount))
+    try:
+        response = DeferredTransaction.refund(token, amount)
+        print("response: {}".format(response))
+        return render_template("webpay/plus_deferred/refund.html", token=token, amount=amount, response=response)
+    except TransbankError as e:
+        print(e.message)
+
+@bp.route("refund-form", methods=["GET"])
+def webpay_plus_refund_form():
+    
+    return render_template("webpay/plus_deferred/refund-form.html")
