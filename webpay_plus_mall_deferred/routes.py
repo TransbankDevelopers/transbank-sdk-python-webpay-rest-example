@@ -74,10 +74,19 @@ def webpay_plus__mall_refund():
 
     return render_template("webpay/plus_mall_deferred/capture.html", token=token, amount=amount, response=response)
 
+@bp.route("status", methods=["POST"])
+def webpay_plus_deferred_status():
+    token = request.form.get("token_ws")
+    commerce_code = request.form.get("commerce_code")
+    print("commit for token_ws: {}, token_ws: {}".format(token, commerce_code))
+    response = MallDeferredTransaction.status(token=token)
+    print("response: {}".format(response))
 
-# @bp.route("status-form", methods=["GET"])
-# def patpass_webpay_status_form():
-#     return render_template("webpay/plus_mall_deferred/status-form.html")
+    return render_template('webpay/plus_mall_deferred/status.html', token=token, response=response)
+
+@bp.route("status-form", methods=["GET"])
+def patpass_webpay_status_form():
+    return render_template("webpay/plus_mall_deferred/status-form.html")
 
 
 # @bp.route("status", methods=["POST"])
