@@ -1,0 +1,29 @@
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Ejemplo Webpay Plus - Confirmar Transacci&oacute;n</title>
+  {% include 'include/header.html' %}
+</head>
+
+<body>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="#">Ejemplo Webpay Plus - Confirmar Transacci&oacute;n</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Step: Commit Transaction</li>
+    </ol>
+  </nav>
+  <div class="alert alert-warning" role="alert">
+    <h3>Request</h3>
+    request: {{ details.details }}
+  </div>
+  <div class="alert alert-primary" role="alert">
+    <h3>Response</h3>
+    {{ response }}
+  </div>
+  <form action="{{ response.url }}" method="POST">
+    <input type="hidden" name="token_ws" value="{{ response.token }}">
+    <input type="submit" value="Ejecutar Pago con Webpay">
+  </form>
+
+</body>
