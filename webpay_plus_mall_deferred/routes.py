@@ -43,7 +43,6 @@ def send_create():
     return render_template('/webpay/plus_mall_deferred/created.html', details=details,
                            response=response)
 
-
 @bp.route("commit", methods=["POST"])
 def webpay_plus_commit():
     token = request.form.get("token_ws")
@@ -54,19 +53,15 @@ def webpay_plus_commit():
 
     return render_template('/webpay/plus_mall_deferred/commit.html', token=token, response=response)
 
-@bp.route('refund-form', methods=['GET'])
-def refund_form():
-    return render_template('/webpay/plus_mall_deferred/refund-form.html')
 
 @bp.route("capture", methods=["POST"])
-def webpay_plus__mall_refund():
+def webpay_plus__mall_capture():
     token = request.form.get("token_ws")
     amount = request.form.get("amount")
     buy_order = request.form.get("buy_order")
     commerce_code = request.form.get("commerce_code")
     authorization_code = request.form.get("authorization_code")
-    response = '123'
-    print("capture for token_ws: {} amount: {} buy_order: {} commerce_code: {} authorization_code: {} ".format(
+    print("Capture for token_ws: {} amount: {} buy_order: {} commerce_code: {} authorization_code: {} ".format(
         token, amount,buy_order, commerce_code,authorization_code))
 
     response = MallDeferredTransaction.capture(token=token, capture_amount=amount, commerce_code=commerce_code,
@@ -88,12 +83,20 @@ def webpay_plus_deferred_status():
 def patpass_webpay_status_form():
     return render_template("webpay/plus_mall_deferred/status-form.html")
 
+@bp.route('refund-form', methods=['GET'])
+def refund_form():
+    return render_template('/webpay/plus_mall_deferred/refund-form.html')
 
-# @bp.route("status", methods=["POST"])
-# def patpass_webpay_status():
-#     token = request.form.get("token_ws")
-#     try:
-#         response = MallDeferredTransaction.status(token)
-#         return render_template("webpay/plus_mall_deferred/status.html", token=token, response=response)
-#     except TransbankError as e:
-#         print(e.message)
+@bp.route("refund", methods=["POST"])
+def webpay_plus_refund():
+    token = request.form.get("token_ws")
+    amount = request.form.get("amount")
+    commerce_code = request.form.get("commerce_code")
+    buy_order = request.form.get("buy_order")
+    print("Refund for token_ws: {} by amount: {}".format(token, amount))
+    try:
+        response = MallDeferredTransaction.refund(token, buy_order, amount, commerce_code)
+        print("response: {}".format(response))
+        return render_template("webpay/plus_mall_deferred/refund.html", token=token, amount=amount, response=response)
+    except TransbankError as e:
+        print(e.message)
