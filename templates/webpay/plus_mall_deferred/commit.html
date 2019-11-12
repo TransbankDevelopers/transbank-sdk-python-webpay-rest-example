@@ -24,8 +24,8 @@
     </div>
     <br>
     <div class='row'>
-        <div class="md-6">
-            <form action="/webpay-plus-mall-deferred/capture" method="POST" class='.col-md-6'
+        <div class="col-md-6">
+            <form action="/webpay-plus-mall-deferred/capture" method="POST"
                 style="margin: 0px 100px;">
                 <div class="form-group">
                     <label for="details_buy_order">Token</label>
@@ -52,8 +52,23 @@
                 </div>
                 <input type="submit" class="btn btn-success" value="Capturar">
             </form>
+            <form id="formulario" action="/webpay-plus-mall-deferred/refund" method="POST" style="margin: 20px 100px;">
+                <div class="form-group d-none">
+                    <label>token_ws:</label><input name="token_ws" type="text" value="{{ token }}" class="form-control" />
+                </div>
+                <div class="form-group d-none">
+                    <label>buy_order:</label><input name="buy_order" type="text" value="{{ response.details[0].buy_order }}" class="form-control" />
+                </div>
+                <div class="form-group d-none">
+                    <label>commerce_code:</label><input name="commerce_code" type="text" value="{{ response.details[0].commerce_code }}" class="form-control" />
+                </div>
+                <div class="form-group d-none">
+                    <label>amount:</label><input name="amount" type="text" value="{{ response.details[0].amount }}" class="form-control" />
+                </div>
+                <input name="enviar" type="submit" value="Reembolsar" class="btn btn-success" />
+            </form>
         </div>
-        <div class="md-6">
+        <div class="col-md-6">
             <form action="/webpay-plus-mall-deferred/capture" method="POST" class='.col-md-6'
                 style="margin: 0px 100px;">
                 <div class="form-group">
@@ -80,6 +95,21 @@
                         class="form-control">
                 </div>
                 <input type="submit" class="btn btn-success" value="Capturar">
+            </form>
+            <form id="formulario" action="/webpay-plus-mall-deferred/refund" method="POST" style="margin: 20px 100px;">
+                <div class="form-group d-none">
+                    <label>token_ws:</label><input name="token_ws" type="text" value="{{ token }}" class="form-control" />
+                </div>
+                <div class="form-group d-none">
+                    <label>buy_order:</label><input name="buy_order" type="text" value="{{ response.details[1].buy_order }}" class="form-control" />
+                </div>
+                <div class="form-group d-none">
+                    <label>commerce_code:</label><input name="commerce_code" type="text" value="{{ response.details[1].commerce_code }}" class="form-control" />
+                </div>
+                <div class="form-group d-none">
+                    <label>amount:</label><input name="amount" type="text" value="{{ response.details[1].amount }}" class="form-control" />
+                </div>
+                <input name="enviar" type="submit" value="Reembolsar" class="btn btn-success" />
             </form>
         </div>
     </div>
