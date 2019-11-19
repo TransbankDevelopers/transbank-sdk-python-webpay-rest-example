@@ -16,6 +16,7 @@ def create_app(config_class=Config):
     from webpay_plus_deferred import bp as webpay_plus_deferred_bp
     from transaccion_completa_mall import bp as transaccion_completa_mall_bp
     from patpass_comercio import bp as patpass_comercio_bp
+    from oneclick import bp as oneclick_bp
 
     app.register_blueprint(transaccion_completa_bp, url_prefix='/fulltransaction')
     app.register_blueprint(patpass_by_webpay_bp, url_prefix='/patpass-webpay')
@@ -24,6 +25,7 @@ def create_app(config_class=Config):
     app.register_blueprint(webpay_plus_deferred_bp, url_prefix="/webpay-plus-deferred")
     app.register_blueprint(transaccion_completa_mall_bp, url_prefix='/mallfulltransaction/')
     app.register_blueprint(patpass_comercio_bp, url_prefix='/patpass-comercio')
+    app.register_blueprint(oneclick_bp, url_prefix='/oneclick-mall')
 
     @app.route('/')
     def index():
