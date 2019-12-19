@@ -9,7 +9,7 @@ services:
     command: flask run --host=0.0.0.0
     volumes:
     - .:/app
-    - "${HOME}/workspaces/transbank-sdk-python/:/transbank-sdk-python"
+    - "${HOME}/Documents/continuum/transbank/sdk/transbank-sdk-python/:/transbank-sdk-python"
     volumes_from:
       - python_cache
     ports:
