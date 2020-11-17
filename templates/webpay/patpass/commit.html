@@ -23,11 +23,6 @@ token_ws: {{ token }}
 </div>
 <p><samp>Pago ACEPTADO por webpay</samp></p>
 <br>
-<form action="/patpass-webpay/refund" method="POST">
-<input type="hidden" name="token_ws" value="{{ token }}">
-<input type="hidden" name="amount" value="{{ response.amount }}">
-<input type="submit" class="btn btn-success" value="Reembolsar Transacci&oacute;n (Anular)">
-</form>
 <a href="/">&laquo; volver a index</a>
 </body>
 </html>
