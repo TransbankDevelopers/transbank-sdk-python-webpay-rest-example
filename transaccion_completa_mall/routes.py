@@ -1,15 +1,14 @@
 from transaccion_completa_mall import bp
 from flask import render_template, request
-from transbank.transaccion_completa_mall.transaction import Transaction
-from transbank.transaccion_completa_mall import child_commerce_codes
+from transbank.webpay.transaccion_completa.mall_transaction import MallTransaction
 from datetime import datetime as dt
 from datetime import timedelta
-
+from transbank.common.integration_commerce_codes import IntegrationCommerceCodes
 
 @bp.route('create', methods=['GET'])
 def show_create():
     return render_template('/transaccion_completa_mall/create.html', dt=dt, timedelta=timedelta,
-                           child_commerce_codes=child_commerce_codes)
+                           child_commerce_codes=IntegrationCommerceCodes.TRANSACCION_COMPLETA_MALL_CHILD_COMMERCE_CODES)
 
 
 @bp.route('create', methods=['POST'])
@@ -31,11 +30,11 @@ def send_create():
             'amount': request.form.get('details[1][amount]')
         }
     ]
-
-    resp = Transaction.create(
+    tx = MallTransaction()
+    resp = tx.create(
         buy_order=buy_order,
         session_id=session_id,
-        card_number=card_number, card_expiration_date=card_expiration_date, details=details
+        card_number=card_number, card_expiration_date=card_expiration_date, details=details, cvv=123
     )
 
     return render_template('transaccion_completa_mall/created.html', resp=resp, req=request.form, dt=dt,
@@ -60,8 +59,8 @@ def installments():
             'installments_number': request.form.get('details[1][installments_number]')
         }
     ]
-
-    resp = Transaction.installments(token=token, details=details)
+    tx = MallTransaction()
+    resp = tx.installments(token=token, details=details)
     return render_template('/transaccion_completa_mall/installments.html', req=req, resp=resp, details=details)
 
 
@@ -86,7 +85,8 @@ def commit():
             'grace_period': request.form.get('details[1][grace_period]')
         }
     ]
-    resp = Transaction.commit(token=token,
+    tx = MallTransaction()
+    resp = tx.commit(token=token,
                               details=details)
     return render_template('/transaccion_completa_mall/transaction_committed.html', req=req, resp=resp)
 
@@ -94,7 +94,8 @@ def commit():
 @bp.route('status/<token>', methods=['GET'])
 def status(token):
     req = request.form
-    resp = Transaction.status(token=token)
+    tx = MallTransaction()
+    resp = tx.status(token=token)
     return render_template('/transaccion_completa_mall/transaction_status.html', req=req, resp=resp)
 
 
@@ -107,7 +108,8 @@ def refund():
     print(token)
     child_buy_order = req.get('child_buy_order')
     child_commerce_code = req.get('child_commerce_code')
-    resp = Transaction.refund(token=token, amount=amount, child_commerce_code=child_commerce_code,
+    tx = MallTransaction()
+    resp = tx.refund(token=token, amount=amount, child_commerce_code=child_commerce_code,
                               child_buy_order=child_buy_order)
 
     return render_template('/transaccion_completa_mall/transaction_refunded.html', req=req, resp=resp)

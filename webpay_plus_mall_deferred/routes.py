@@ -5,15 +5,19 @@ from transbank.error.transbank_error import TransbankError
 from datetime import datetime as dt
 from datetime import timedelta
 from webpay_plus_mall_deferred import bp
-from transbank.webpay.webpay_plus import mall_deferred_default_child_commerce_codes
-from transbank.webpay.webpay_plus.mall_deferred_transaction import MallDeferredTransaction
+from transbank.webpay.webpay_plus.mall_transaction import MallTransaction
 from transbank.webpay.webpay_plus.request import MallTransactionCreateDetails
+
+from transbank.common.integration_commerce_codes import IntegrationCommerceCodes
+from transbank.common.integration_type import IntegrationType
+from transbank.common.integration_api_keys import IntegrationApiKeys
+from transbank.common.options import WebpayOptions
 
 
 @bp.route('create', methods=['GET'])
 def show_create():
     return render_template('/webpay/plus_mall_deferred/create.html', dt=dt, timedelta=timedelta,
-                           child_commerce_codes=mall_deferred_default_child_commerce_codes)
+                           child_commerce_codes=IntegrationCommerceCodes.WEBPAY_PLUS_MALL_DEFERRED_CHILD_COMMERCE_CODES)
 
 @bp.route('create', methods=['POST'])
 def send_create():
@@ -32,7 +36,8 @@ def send_create():
     details = MallTransactionCreateDetails(amount_child_1, commerce_code_child_1, buy_order_child_1) \
             .add(amount_child_2, commerce_code_child_2, buy_order_child_2)
 
-    response = MallDeferredTransaction.create(
+    tx = (MallTransaction(WebpayOptions(IntegrationCommerceCodes.WEBPAY_PLUS_MALL_DEFERRED, IntegrationApiKeys.WEBPAY, IntegrationType.TEST)))
+    response = tx.create(
         buy_order=buy_order,
         session_id=session_id,
         return_url=return_url,
@@ -43,12 +48,24 @@ def send_create():
     return render_template('/webpay/plus_mall_deferred/created.html', details=details,
                            response=response)
 
-@bp.route("commit", methods=["POST"])
+@bp.route("commit", methods=["GET"])
 def webpay_plus_commit():
+    token = request.args.get("token_ws")
+    print("commit for token_ws: {}".format(token))
+
+    tx = (MallTransaction(WebpayOptions(IntegrationCommerceCodes.WEBPAY_PLUS_MALL_DEFERRED, IntegrationApiKeys.WEBPAY, IntegrationType.TEST)))
+    response = tx.commit(token=token)
+    print("response: {}".format(response))
+
+    return render_template('/webpay/plus_mall_deferred/commit.html', token=token, response=response)
+
+@bp.route("commit", methods=["POST"])
+def webpay_plus_commit_error():
     token = request.form.get("token_ws")
     print("commit for token_ws: {}".format(token))
 
-    response = MallDeferredTransaction.commit(token=token)
+    tx = (MallTransaction(WebpayOptions(IntegrationCommerceCodes.WEBPAY_PLUS_MALL_DEFERRED, IntegrationApiKeys.WEBPAY, IntegrationType.TEST)))
+    response = tx.commit(token=token)
     print("response: {}".format(response))
 
     return render_template('/webpay/plus_mall_deferred/commit.html', token=token, response=response)
@@ -64,7 +81,8 @@ def webpay_plus__mall_capture():
     print("Capture for token_ws: {} amount: {} buy_order: {} commerce_code: {} authorization_code: {} ".format(
         token, amount,buy_order, commerce_code,authorization_code))
 
-    response = MallDeferredTransaction.capture(token=token, capture_amount=amount, commerce_code=commerce_code,
+    tx = MallTransaction(WebpayOptions(IntegrationCommerceCodes.WEBPAY_PLUS_MALL_DEFERRED, IntegrationApiKeys.WEBPAY, IntegrationType.TEST))
+    response = tx.capture(token=token, capture_amount=amount, child_commerce_code=commerce_code,
                             buy_order=buy_order, authorization_code=authorization_code)
 
     return render_template("webpay/plus_mall_deferred/capture.html", token=token, amount=amount, response=response)
@@ -74,7 +92,8 @@ def webpay_plus_deferred_status():
     token = request.form.get("token_ws")
     commerce_code = request.form.get("commerce_code")
     print("commit for token_ws: {}, token_ws: {}".format(token, commerce_code))
-    response = MallDeferredTransaction.status(token=token)
+    tx = (MallTransaction(WebpayOptions(IntegrationCommerceCodes.WEBPAY_PLUS_MALL_DEFERRED, IntegrationApiKeys.WEBPAY, IntegrationType.TEST)))
+    response = tx.status(token=token)
     print("response: {}".format(response))
 
     return render_template('webpay/plus_mall_deferred/status.html', token=token, response=response)
@@ -95,7 +114,8 @@ def webpay_plus_refund():
     buy_order = request.form.get("buy_order")
     print("Refund for token_ws: {} by amount: {}".format(token, amount))
     try:
-        response = MallDeferredTransaction.refund(token, buy_order, amount, commerce_code)
+        tx = (MallTransaction(WebpayOptions(IntegrationCommerceCodes.WEBPAY_PLUS_MALL_DEFERRED, IntegrationApiKeys.WEBPAY, IntegrationType.TEST)))
+        response = tx.refund(token, buy_order, commerce_code, amount)
         print("response: {}".format(response))
         return render_template("webpay/plus_mall_deferred/refund.html", token=token, amount=amount, response=response)
     except TransbankError as e:

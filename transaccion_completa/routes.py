@@ -1,6 +1,6 @@
 from transaccion_completa import bp
 from flask import render_template, request
-from transbank.transaccion_completa.transaction import Transaction
+from transbank.webpay.transaccion_completa.transaction import Transaction
 from datetime import datetime as dt
 from datetime import timedelta
 
@@ -19,7 +19,8 @@ def send_create():
     cvv = request.form.get('cvv')
     card_expiration_date = request.form.get('card_expiration_date')
 
-    resp = Transaction.create(
+    tx = Transaction()
+    resp = tx.create(
         buy_order=buy_order, session_id=session_id, amount=amount,
         card_number=card_number, cvv=cvv, card_expiration_date=card_expiration_date
     )
@@ -32,7 +33,8 @@ def installments():
     req = request.form
     token = request.form.get('token')
     installments_number = request.form.get('installments_number')
-    resp = Transaction.installments(token=token, installments_number=installments_number)
+    tx = Transaction()
+    resp = tx.installments(token=token, installments_number=installments_number)
     return render_template('transaccion_completa/installments.html', req=req, resp=resp)
 
 
@@ -44,7 +46,8 @@ def commit():
     deferred_period_index = request.form.get('deferred_period_index')
     grace_period = request.form.get('grace_period') != 'false'
 
-    resp = Transaction.commit(token=token,
+    tx = Transaction()
+    resp = tx.commit(token=token,
                               id_query_installments=id_query_installments,
                               deferred_period_index=deferred_period_index,
                               grace_period=grace_period)
@@ -54,7 +57,8 @@ def commit():
 @bp.route('status/<token>', methods=['GET'])
 def status(token):
     req = request.form
-    resp = Transaction.status(token=token)
+    tx = Transaction()
+    resp = tx.status(token=token)
     return render_template('transaccion_completa/transaction_status.html', req=req, resp=resp)
 
 
@@ -63,5 +67,6 @@ def refund():
     req = request.form
     token = req.get('token')
     amount = req.get('amount')
-    resp = Transaction.refund(token=token, amount=amount)
+    tx = Transaction()
+    resp = tx.refund(token=token, amount=amount)
     return render_template('transaccion_completa/transaction_refunded.html', req=req, resp=resp)

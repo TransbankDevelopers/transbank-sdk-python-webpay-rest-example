@@ -1,10 +1,11 @@
 from transbank.error.transbank_error import TransbankError
-from transbank.oneclick.request import MallTransactionAuthorizeDetails
+from transbank.webpay.oneclick.request import MallTransactionAuthorizeDetails
 
 from oneclick import bp
 from flask import render_template, request
-from transbank.oneclick.mall_inscription import MallInscription
-from transbank.oneclick.mall_transaction import MallTransaction
+from transbank.webpay.oneclick.mall_inscription import MallInscription
+from transbank.webpay.oneclick.mall_transaction import MallTransaction
+
 import random
 
 
@@ -24,20 +25,22 @@ def start():
     email = request.form.get('email')
     response_url = request.form.get('response_url')
 
-    resp = MallInscription.start(
-        user_name=user_name,
+    ins = MallInscription()
+    resp = ins.start(
+        username=user_name,
         email=email,
         response_url=response_url)
 
     return render_template('oneclick/started.html', resp=resp, req=request.form)
 
 
-@bp.route('finish', methods=['POST'])
+@bp.route('finish', methods=['GET'])
 def finish():
     req = request.form
-    token = request.form.get('TBK_TOKEN')
+    token = request.args.get('TBK_TOKEN')
 
-    resp = MallInscription.finish(token=token)
+    ins = MallInscription()
+    resp = ins.finish(token)
     buy_order_1 = str(random.randrange(1000000, 99999999))
     buy_order_2 = str(random.randrange(1000000, 99999999))
     buy_order = str(random.randrange(1000000, 99999999))
@@ -47,6 +50,35 @@ def finish():
                            buy_order_2=buy_order_2, buy_order=buy_order, token=token, commerce_code_1=commerce_code_1,
                            commerce_code_2=commerce_code_2)
 
+@bp.route('finish', methods=['POST'])
+def finish_error():
+    req = request.form
+    token = request.form.get('TBK_TOKEN')
+
+    ins = MallInscription()
+    resp = ins.finish(token=token)
+    buy_order_1 = str(random.randrange(1000000, 99999999))
+    buy_order_2 = str(random.randrange(1000000, 99999999))
+    buy_order = str(random.randrange(1000000, 99999999))
+    commerce_code_1 = '597055555542'
+    commerce_code_2 = '597055555543'
+    return render_template('oneclick/authorize.html', req=req, resp=resp, buy_order_1=buy_order_1,
+                           buy_order_2=buy_order_2, buy_order=buy_order, token=token, commerce_code_1=commerce_code_1,
+                           commerce_code_2=commerce_code_2)
+
+@bp.route('delete', methods=['POST'])
+def delete():
+    req = request.form
+
+    tbk_user = request.form.get('tbk_user')
+    user_name = request.form.get('user_name')
+
+    try:
+        ins = MallInscription()
+        resp = ins.delete(tbk_user, user_name)
+        return render_template('oneclick/deleted.html', req=req, resp=resp)
+    except TransbankError as e:
+        print("ERROR_MESSAGE: {}".format(e.message))
 
 @bp.route('authorize', methods=['POST'])
 def authorize():
@@ -69,7 +101,8 @@ def authorize():
     details = MallTransactionAuthorizeDetails(commerce_code, buy_order_child, installments_number, amount) \
         .add(commerce_code2, buy_order_child2, installments_number2, amount2)
 
-    resp = MallTransaction.authorize(user_name=user_name, tbk_user=tbk_user, buy_order=buy_order, details=details)
+    tx = MallTransaction()
+    resp = tx.authorize(username=user_name, tbk_user=tbk_user, parent_buy_order=buy_order, details=details)
     return render_template('oneclick/refund.html', req=req, resp=resp, details=details.details, buy_order=buy_order,
                            tbk_user=tbk_user)
 
@@ -82,29 +115,18 @@ def refund():
     child_buy_order = request.form.get('child_buy_order')
     amount = request.form.get('amount')
     tbk_user = request.form.get('tbk_user')
-
-    resp = MallTransaction.refund(buy_order, child_commerce_code, child_buy_order, amount)
+    tx = MallTransaction()
+    resp = tx.refund(buy_order, child_commerce_code, child_buy_order, amount)
     return render_template('oneclick/delete.html', req=req, resp=resp, tbk_user=tbk_user)
 
 
-@bp.route('delete', methods=['POST'])
-def delete():
-    req = request.form
 
-    tbk_user = request.form.get('tbk_user')
-    user_name = request.form.get('user_name')
-
-    try:
-        resp = MallInscription.delete(tbk_user, user_name)
-        return render_template('oneclick/deleted.html', req=req, resp=resp)
-    except TransbankError as e:
-        print("ERROR_MESSAGE: {}".format(e.message))
 
 
 @bp.route('status', methods=['POST'])
 def status():
     buy_order = request.form.get('buy_order')
-
-    resp = MallTransaction.status(buy_order)
+    tx = MallTransaction()
+    resp = tx.status(buy_order)
 
     return render_template('oneclick/status.html', resp=resp, req=request.form)
