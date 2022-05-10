@@ -18,12 +18,12 @@
 
     <div class="form-group">
       <label>Orden de compra</label>
-      <input name="buy_order" value="{{ 'buyorder' + dt.utcnow().strftime('%s') }}" class="form-control" />
+      <input name="buy_order" value="{{ 'buyorder' + dt.utcnow().strftime('%S') }}" class="form-control" />
     </div>
 
     <div class="form-group">
       <label>Id de sesi&oacute;n</label>
-      <input name="session_id" value="{{ 'session' + dt.utcnow().strftime('%s') }}" class="form-control" />
+      <input name="session_id" value="{{ 'session' + dt.utcnow().strftime('%S') }}" class="form-control" />
     </div>
 
     <div class="form-group">
@@ -49,7 +49,7 @@
 
     <div class="form-group">
       <label>Orden de compra (comercio hijo)</label>
-      <input name="details[0][buy_order]" value="{{ 'abcdef' + dt.utcnow().strftime('%s') }}" class="form-control" />
+      <input name="details[0][buy_order]" value="{{ 'abcdef' + dt.utcnow().strftime('%S') }}" class="form-control" />
     </div>
 
     <div class="form-group">
@@ -69,7 +69,7 @@
 
     <div class="form-group">
       <label>Orden de compra (comercio hijo)</label>
-      <input name="details[1][buy_order]" value="{{ 'wxyz' + dt.utcnow().strftime('%s')  }}" class="form-control" />
+      <input name="details[1][buy_order]" value="{{ 'wxyz' + dt.utcnow().strftime('%S')  }}" class="form-control" />
     </div>
 
     <div class="form-group">

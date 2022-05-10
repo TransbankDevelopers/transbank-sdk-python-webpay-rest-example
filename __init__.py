@@ -36,4 +36,5 @@ def create_app(config_class=Config):
     return app
 
 
-create_app()
+create_app().run()
+#create_app()

@@ -37,7 +37,8 @@ def patpass_webpay_create():
         'expiration_date': expiration_date,
     }
 
-    response = Transaction.create(buy_order, session_id, 1000, return_url, service_id, card_holder_id, card_holder_name,
+    tx = Transaction()
+    response = tx.create(buy_order, session_id, 1000, return_url, service_id, card_holder_id, card_holder_name,
                                   card_holder_last_name1, card_holder_last_name2, card_holder_mail, cellphone_number,
                                   expiration_date, commerce_mail, False)
 
@@ -46,12 +47,13 @@ def patpass_webpay_create():
     return render_template('webpay/patpass/create.html', request=create_request, response=response)
 
 
-@bp.route('commit', methods=["POST"])
+@bp.route('commit', methods=["GET"])
 def patpass_webpay_commit():
-    token = request.form.get("token_ws")
+    token = request.args.get("token_ws")
     print("commit for token_ws: {}".format(token))
 
-    response = Transaction.commit(token=token)
+    tx = Transaction()
+    response = tx.commit(token=token)
     print("response: {}".format(response))
 
     return render_template('webpay/patpass/commit.html', token=token, response=response)
@@ -66,7 +68,8 @@ def patpass_webpay_status_form():
 def patpass_webpay_status():
     token = request.form.get("token_ws")
     try:
-        response = Transaction.status(token)
+        tx = Transaction()
+        response = tx.status(token)
         print(response)
         return render_template("webpay/patpass/status.html", token=token, response=response)
     except TransbankError as e:

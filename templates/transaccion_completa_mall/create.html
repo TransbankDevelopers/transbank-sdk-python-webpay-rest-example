@@ -6,12 +6,12 @@
   <label for="buy_order">
     Orden de compra
   </label>
-  <input id="buy_order" name="buy_order" value="{{ 'buyorder' + dt.utcnow().strftime('%s') }}"/>
+  <input id="buy_order" name="buy_order" value="{{ 'buyorder' + dt.utcnow().strftime('%S') }}"/>
 
   <label for="session_id">
     Id de sesión
   </label>
-  <input id="session_id" name="session_id" value="{{ 'session' + dt.utcnow().strftime('%s') }}" />
+  <input id="session_id" name="session_id" value="{{ 'session' + dt.utcnow().strftime('%S') }}" />
 
   <label for="card_number">
     Numero de tarjeta
@@ -34,7 +34,7 @@
 
 
   <label for="details_buy_order">Orden de compra (comercio hijo)</label>
-  <input id="details_buy_order" name="details[0][buy_order]" value="{{ 'abcdef' + dt.utcnow().strftime('%s') }}"/>
+  <input id="details_buy_order" name="details[0][buy_order]" value="{{ 'abcdef' + dt.utcnow().strftime('%S') }}"/>
 
   <label for="details_amount">Monto</label>
   <input id="details_amount" name="details[0][amount]" value="1000"/>
@@ -49,7 +49,7 @@
 
 
   <label for="details_buy_order">Orden de compra (comercio hijo)</label>
-  <input id="details_buy_order" name="details[1][buy_order]" value="{{ 'wxyz' + dt.utcnow().strftime('%s')  }}"/>
+  <input id="details_buy_order" name="details[1][buy_order]" value="{{ 'wxyz' + dt.utcnow().strftime('%S')  }}"/>
 
   <label for="details_amount">Monto</label>
   <input id="details_amount" name="details[1][amount]" value="2000"/>

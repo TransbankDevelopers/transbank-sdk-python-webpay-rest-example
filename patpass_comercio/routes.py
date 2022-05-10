@@ -14,9 +14,9 @@ def patpass_comercio_inscription():
     first_last_name = 'apellido'
     second_last_name = 'apellido'
     rut = '14140066-5'
-    return_url = request.url_root + 'patpass-comercio/end-inscription'
+    return_url = 'http://return_url' #request.url_root + 'patpass-comercio/end-inscription'
     service_id = random.randrange(1000000, 99999999)
-    final_url = request.url_root + 'patpass-comercio/voucher-generated'
+    final_url = 'http://final_url' #request.url_root + 'patpass-comercio/voucher-generated'
     max_amount = 0
     phone_number = random.randrange(1000000, 99999999)
     mobile_number = random.randrange(1000000, 99999999)
@@ -26,6 +26,7 @@ def patpass_comercio_inscription():
     address = random_string(20)
     city = random_string(20)
 
+    
     inscription_request = {
         'return_url': return_url,
         'name': name,
@@ -44,7 +45,8 @@ def patpass_comercio_inscription():
         'city': city,
     }
 
-    response = Inscription.start(return_url, name, first_last_name, second_last_name, rut, service_id, final_url,
+    ins = Inscription().configure_for_testing()
+    response = ins.start(return_url, name, first_last_name, second_last_name, rut, service_id, None,
                                        max_amount, phone_number, mobile_number, patpass_name,
                                        person_email, commerce_mail, address, city)
 
@@ -65,7 +67,8 @@ def patpass_comercio_end_inscription():
 def patpass_comercio_status():
     token = request.form.get("tokenComercio")
     try:
-        response = Inscription.status(token)
+        ins = Inscription()
+        response = ins.status(token)
         print(response)
         return render_template("patpass_comercio/status.html", token=token, response=response)
     except TransbankError as e:

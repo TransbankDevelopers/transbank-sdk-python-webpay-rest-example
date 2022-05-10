@@ -6,12 +6,12 @@
   <label for="buy_order">
     Orden de compra
   </label>
-  <input id="buy_order" name="buy_order" value="{{ 'buyorder' + dt.utcnow().strftime('%s') }}"  />
+  <input id="buy_order" name="buy_order" value="{{ 'buyorder' + dt.utcnow().strftime('%S') }}"  />
 
   <label for="session_id">
     Id de sesión
   </label>
-  <input id="session_id" name="session_id" value="{{ 'session' + dt.utcnow().strftime('%s') }}" />
+  <input id="session_id" name="session_id" value="{{ 'session' + dt.utcnow().strftime('%S') }}" />
 
   <label for="amount">
     Monto
