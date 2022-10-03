@@ -120,3 +120,77 @@ def webpay_plus_refund():
         return render_template("webpay/plus_mall_deferred/refund.html", token=token, amount=amount, response=response)
     except TransbankError as e:
         print(e.message)
+
+@bp.route("increase_amount", methods=["POST"])
+def webpay_plus_increase_amount():
+    buy_order = request.form.get("buy_order")
+    token = request.form.get("token_ws")
+    authorization_code = request.form.get("authorization_code")
+    amount = request.form.get("amount")
+    commerce_code = request.form.get("commerce_code")
+    print("Increase amount for buy_order: {} token: {} authorization_code: {} amount: {} commerce_code: {}".format(buy_order, token, authorization_code, amount, commerce_code))
+    tx = (MallTransaction(WebpayOptions(IntegrationCommerceCodes.WEBPAY_PLUS_MALL_DEFERRED, IntegrationApiKeys.WEBPAY, IntegrationType.TEST)))
+    response = tx.increaseAmount(buy_order, token, authorization_code, amount, commerce_code)
+    print ("response: {}".format(response))
+    request_data = {
+        "buy_order": buy_order,
+        "token": token,
+        "authorization_code": authorization_code,
+        "amount": amount,
+        "commerce_code": commerce_code
+    }
+    return render_template("webpay/plus_mall_deferred/increase_amount.html", request = request_data, response=response)
+
+@bp.route("increase_date", methods=["POST"])
+def webpay_plus_increase_date():
+    buy_order = request.form.get("buy_order")
+    token = request.form.get("token_ws")
+    authorization_code = request.form.get("authorization_code")
+    commerce_code = request.form.get("commerce_code")
+    print("Increase date for buy_order: {} token: {} authorization_code: {} commerce_code: {}".format(buy_order, token, authorization_code, commerce_code))
+    tx = (MallTransaction(WebpayOptions(IntegrationCommerceCodes.WEBPAY_PLUS_MALL_DEFERRED, IntegrationApiKeys.WEBPAY, IntegrationType.TEST)))
+    response = tx.increaseAuthorizationDate(token, buy_order, authorization_code, commerce_code)
+    print ("response: {}".format(response))
+    request_data = {
+        "buy_order": buy_order,
+        "token": token,
+        "authorization_code": authorization_code,
+        "commerce_code": commerce_code
+    }
+    return render_template("webpay/plus_mall_deferred/increase_date.html", request = request_data, response=response)
+
+@bp.route("reverse_preauthorized_amount", methods=["POST"])
+def webpay_plus_reverse_preauthorized_amount():
+    buy_order = request.form.get("buy_order")
+    token = request.form.get("token_ws")
+    authorization_code = request.form.get("authorization_code")
+    amount = request.form.get("amount")
+    commerce_code = request.form.get("commerce_code")
+    print("Reverse pre authorized amount for buy_order: {} token: {} authorization_code: {} amount: {} commerce_code: {}".format(buy_order, token, authorization_code, amount, commerce_code))
+    tx = (MallTransaction(WebpayOptions(IntegrationCommerceCodes.WEBPAY_PLUS_MALL_DEFERRED, IntegrationApiKeys.WEBPAY, IntegrationType.TEST)))
+    response = tx.reversePreAuthorizedAmount(buy_order, token, authorization_code, amount, commerce_code)
+    print ("response: {}".format(response))
+    request_data = {
+        "buy_order": buy_order,
+        "token": token,
+        "authorization_code": authorization_code,
+        "amount": amount,
+        "commerce_code": commerce_code
+    }
+    return render_template("webpay/plus_mall_deferred/reverse_preauthorized_amount.html", request = request_data, response=response)
+
+@bp.route("history", methods=["POST"])
+def webpay_plus_history():
+    token = request.form.get("token_ws")
+    buy_order = request.form.get("buy_order")
+    commerce_code = request.form.get("commerce_code")
+    print("Deferred capture history for token: {} buy_order: {} commerce_code: {}".format(token, buy_order, commerce_code))
+    tx = (MallTransaction(WebpayOptions(IntegrationCommerceCodes.WEBPAY_PLUS_MALL_DEFERRED, IntegrationApiKeys.WEBPAY, IntegrationType.TEST)))
+    response = tx.deferredCaptureHistory(token, buy_order,commerce_code)
+    print ("response: {}".format(response))
+    request_data = {
+        "token": token,
+        "buy_order": buy_order,
+        "commerce_code": commerce_code
+    }
+    return render_template("webpay/plus_mall_deferred/history.html", request = request_data, response=response)
