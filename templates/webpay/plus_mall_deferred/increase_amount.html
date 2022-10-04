@@ -1,0 +1,58 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Ejemplo Webpay Plus Mall Diferido - Incrementar monto Transacci&oacute;n</title>
+    {% include 'include/header.html' %}
+</head>
+
+<body class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Ejemplos Webpay Plus Mall Diferido - Incrementar monto
+                    Transacci&oacute;nn</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Step: Increase Amount</li>
+        </ol>
+    </nav>
+
+    <div class="alert alert-warning" role="alert">
+        <h3>Request</h3>
+        {{ request }}
+    </div>
+    <div class="alert alert-primary" role="alert">
+        <h3>Result</h3>
+        {{ response }}
+    </div>
+    <form action="/webpay-plus-mall-deferred/reverse_preauthorized_amount" method="POST">
+        <input type="hidden" name="token_ws" value="{{ request.token }}">
+        <input type="hidden" name="buy_order" value="{{ request.buy_order }}">
+        <input type="hidden" name="authorization_code" value="{{ request.authorization_code }}">
+        <input type="hidden" name="amount" value="{{ request.amount }}">
+        <input type="hidden" name="commerce_code" value="{{ request.commerce_code }}">
+        <input type="submit" class="btn btn-success" value="Reversa monto pre autorizado">
+    </form>
+    <form action="/webpay-plus-mall-deferred/increase_date" method="POST">
+        <input type="hidden" name="token_ws" value="{{ request.token }}">
+        <input type="hidden" name="buy_order" value="{{ request.buy_order }}">
+        <input type="hidden" name="commerce_code" value="{{ request.commerce_code }}">
+        <input type="hidden" name="authorization_code" value="{{ request.authorization_code }}">
+        <input type="submit" class="btn btn-success" value="Incrementar fecha de expiracion">
+    </form>
+    <form action="/webpay-plus-mall-deferred/history" method="POST">
+        <input type="hidden" name="token_ws" value="{{ request.token }}">
+        <input type="hidden" name="buy_order" value="{{ request.buy_order }}">
+        <input type="hidden" name="authorization_code" value="{{ request.authorization_code }}">
+        <input type="hidden" name="commerce_code" value="{{ request.commerce_code }}">
+        <input type="submit" class="btn btn-success" value="Historial">
+    </form>
+    <form action="/webpay-plus-mall-deferred/capture" method="POST">
+        <input type="hidden" name="token_ws" value="{{ request.token }}">
+        <input type="hidden" name="buy_order" value="{{ request.buy_order }}">
+        <input type="hidden" name="authorization_code" value="{{ request.authorization_code }}">
+        <input type="hidden" name="amount" value="{{ request.amount }}">
+        <input type="hidden" name="commerce_code" value="{{ request.commerce_code }}">
+        <input type="submit" class="btn btn-success" value="Capturar">
+    </form>
+    <a href="/">&laquo; volver a index</a>
+</body>
+</html>

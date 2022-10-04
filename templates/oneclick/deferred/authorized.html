@@ -1,0 +1,151 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Ejemplo Oneclick Mall Diferido - Transaccion autorizada</title>
+    {% include 'include/header.html' %}
+</head>
+
+<body class="container">
+    <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="#">Ejemplo Oneclick Mall Diferido - Transaccion autorizada</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Step: Authorized Transaction</li>
+    </ol>
+    </nav>
+
+<div class="alert alert-warning" role="alert">
+<h3>request</h3>
+{{ request }}
+</div>
+<div class="alert alert-primary" role="alert">
+<h3>result</h3>
+{{ response }}
+</div>
+<br>
+<form action="/oneclick-mall-deferred/refund" method="POST">
+
+    <input type="hidden" id="buy_order" name="buy_order" value="{{ buy_order }}">
+    <input type="hidden" id="tbk_user" name="tbk_user" value="{{ tbk_user }}">
+
+    <h3>Comercio 1</h3>
+
+ <div class="form-group">
+  <label for="details_commerce_code_1">Codigo de comercio (comercio hijo)</label>
+  <input id="details_commerce_code_1" class="form-control" name="child_commerce_code" value="{{ details[0]['commerce_code'] }}">
+ </div>
+ <div class="form-group">
+  <label for="details_buy_order_1">Orden de compra (comercio hijo)</label>
+  <input id="details_buy_order_1" class="form-control" name="child_buy_order" value="{{ details[0]['buy_order'] }}"/>
+ </div>
+ <div class="form-group">
+   <label for="details_amount_1">Monto (comercio hijo)</label>
+  <input id="details_amount_1" class="form-control" name="amount" value="{{ details[0]['amount'] }}">
+ </div>
+
+
+<input type="submit" class="btn btn-success" value="Anular pago">
+</form>
+
+<form action="/oneclick-mall-deferred/increase_amount" method="POST">
+    <input type="hidden" name="buy_order" value="{{ response.details[0].buy_order }}">
+    <input type="hidden" name="authorization_code" value="{{ response.details[0].authorization_code }}">
+    <input type="hidden" name="amount" value="{{ response.details[0].amount }}">
+    <input type="hidden" name="commerce_code" value="{{ response.details[0].commerce_code }}">
+    <input type="submit" class="btn btn-success" value="Incrementar monto">
+</form>
+
+<form action="/oneclick-mall-deferred/reverse_preauthorized_amount" method="POST">
+    <input type="hidden" name="buy_order" value="{{ response.details[0].buy_order }}">
+    <input type="hidden" name="authorization_code" value="{{ response.details[0].authorization_code }}">
+    <input type="hidden" name="amount" value="{{ response.details[0].amount }}">
+    <input type="hidden" name="commerce_code" value="{{ response.details[0].commerce_code }}">
+    <input type="submit" class="btn btn-success" value="Reversa monto pre autorizado">
+</form>
+
+<form action="/oneclick-mall-deferred/increase_date" method="POST">
+    <input type="hidden" name="buy_order" value="{{ response.details[0].buy_order }}">
+    <input type="hidden" name="authorization_code" value="{{ response.details[0].authorization_code }}">
+    <input type="hidden" name="commerce_code" value="{{ response.details[0].commerce_code }}">
+    <input type="submit" class="btn btn-success" value="Incrementar fecha expiracion">
+</form>
+
+<form action="/oneclick-mall-deferred/history" method="POST">
+    <input type="hidden" name="buy_order" value="{{ response.details[0].buy_order }}">
+    <input type="hidden" name="authorization_code" value="{{ response.details[0].authorization_code }}">
+    <input type="hidden" name="commerce_code" value="{{ response.details[0].commerce_code }}">
+    <input type="submit" class="btn btn-success" value="Historial">
+</form>
+
+<form action="/oneclick-mall-deferred/capture" method="POST">
+    <input type="hidden" name="buy_order" value="{{ response.details[0].buy_order }}">
+    <input type="hidden" name="authorization_code" value="{{ response.details[0].authorization_code }}">
+    <input type="hidden" name="commerce_code" value="{{ response.details[0].commerce_code }}">
+    <input type="hidden" name="capture_amount" value="{{ response.details[0].amount }}">
+    <input type="submit" class="btn btn-success" value="Capturar">
+</form>
+
+<form action="/oneclick-mall-deferred/refund" method="POST">
+
+    <input type="hidden" id="buy_order" name="buy_order" value="{{ buy_order }}">
+    <input type="hidden" id="tbk_user" name="tbk_user" value="{{ tbk_user }}">
+
+    <h3>Comercio 2</h3>
+
+ <div class="form-group">
+  <label for="details_commerce_code_1">Codigo de comercio (comercio hijo)</label>
+  <input id="details_commerce_code_1" class="form-control" name="child_commerce_code" value="{{ details[1]['commerce_code'] }}">
+ </div>
+ <div class="form-group">
+  <label for="details_buy_order_1">Orden de compra (comercio hijo)</label>
+  <input id="details_buy_order_1" class="form-control" name="child_buy_order" value="{{ details[1]['buy_order'] }}"/>
+ </div>
+ <div class="form-group">
+   <label for="details_amount_1">Monto (comercio hijo)</label>
+  <input id="details_amount_1" class="form-control" name="amount" value="{{ details[1]['amount'] }}">
+ </div>
+
+
+<input type="submit" class="btn btn-success" value="Anular pago">
+</form>
+
+<form action="/oneclick-mall-deferred/increase_amount" method="POST">
+    <input type="hidden" name="buy_order" value="{{ response.details[1].buy_order }}">
+    <input type="hidden" name="authorization_code" value="{{ response.details[1].authorization_code }}">
+    <input type="hidden" name="amount" value="{{ response.details[1].amount }}">
+    <input type="hidden" name="commerce_code" value="{{ response.details[1].commerce_code }}">
+    <input type="submit" class="btn btn-success" value="Incrementar monto">
+</form>
+
+<form action="/oneclick-mall-deferred/reverse_preauthorized_amount" method="POST">
+    <input type="hidden" name="buy_order" value="{{ response.details[1].buy_order }}">
+    <input type="hidden" name="authorization_code" value="{{ response.details[1].authorization_code }}">
+    <input type="hidden" name="amount" value="{{ response.details[1].amount }}">
+    <input type="hidden" name="commerce_code" value="{{ response.details[1].commerce_code }}">
+    <input type="submit" class="btn btn-success" value="Reversa monto pre autorizado">
+</form>
+
+<form action="/oneclick-mall-deferred/increase_date" method="POST">
+    <input type="hidden" name="buy_order" value="{{ response.details[1].buy_order }}">
+    <input type="hidden" name="authorization_code" value="{{ response.details[1].authorization_code }}">
+    <input type="hidden" name="commerce_code" value="{{ response.details[1].commerce_code }}">
+    <input type="submit" class="btn btn-success" value="Incrementar fecha expiracion">
+</form>
+
+<form action="/oneclick-mall-deferred/history" method="POST">
+    <input type="hidden" name="buy_order" value="{{ response.details[1].buy_order }}">
+    <input type="hidden" name="authorization_code" value="{{ response.details[1].authorization_code }}">
+    <input type="hidden" name="commerce_code" value="{{ response.details[1].commerce_code }}">
+    <input type="submit" class="btn btn-success" value="Historial">
+</form>
+
+<form action="/oneclick-mall-deferred/capture" method="POST">
+    <input type="hidden" name="buy_order" value="{{ response.details[1].buy_order }}">
+    <input type="hidden" name="authorization_code" value="{{ response.details[1].authorization_code }}">
+    <input type="hidden" name="commerce_code" value="{{ response.details[1].commerce_code }}">
+    <input type="hidden" name="capture_amount" value="{{ response.details[1].amount }}">
+    <input type="submit" class="btn btn-success" value="Capturar">
+</form>
+
+<a href="/">&laquo; volver a index</a>
+</body>
+</html>

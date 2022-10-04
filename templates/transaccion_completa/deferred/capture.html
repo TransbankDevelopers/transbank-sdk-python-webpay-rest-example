@@ -1,28 +1,27 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Ejemplo Webpay Plus Diferido- ReembolsarTransacci&oacute;n</title>
+    <title>Ejemplo Transaccion completa Diferido- Captura</title>
     {% include 'include/header.html' %}
 </head>
 
 <body class="container">
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Ejemplos Webpay Plus Diferido - Reembolsar Transacci&oacute;nn</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Step: Refund</li>
+        <li class="breadcrumb-item"><a href="#">Ejemplo Transaccion completa Diferido - Captura</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Step: Capture </li>
     </ol>
 </nav>
 
 <div class="alert alert-warning" role="alert">
-    <h3>request</h3>
-    token_ws: {{ token }}, amount: {{ amount }}
+    <h3>Request</h3>
+    {{ request }}
 </div>
 <div class="alert alert-primary" role="alert">
     <h3>result</h3>
     {{ response }}
 </div>
-<br>
-<br>
+
 <a href="/">&laquo; volver a index</a>
 </body>
 </html>

@@ -1,23 +1,21 @@
 <html>
-
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Ejemplo Webpay Plus Mall Diferido- Capturar Transacci&oacute;n</title>
+    <title>Ejemplo Oneclick Mall Diferido - Captura</title>
     {% include 'include/header.html' %}
 </head>
 
 <body class="container">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Ejemplos Webpay Plus Mall Diferido - Capturar
-                    Transacci&oacute;nn</a></li>
+            <li class="breadcrumb-item"><a href="#">Ejemplo Oneclick Mall Diferido - Captura</a></li>
             <li class="breadcrumb-item active" aria-current="page">Step: Capture</li>
         </ol>
     </nav>
 
     <div class="alert alert-warning" role="alert">
         <h3>Request</h3>
-        token_ws: {{ token }}, amount: {{ amount }}
+        {{ request }}
     </div>
     <div class="alert alert-primary" role="alert">
         <h3>Result</h3>

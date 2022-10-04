@@ -1,0 +1,209 @@
+from transbank.error.transbank_error import TransbankError
+from transbank.webpay.oneclick.request import MallTransactionAuthorizeDetails
+
+from oneclick_deferred import bp
+from flask import render_template, request
+from transbank.webpay.oneclick.mall_inscription import MallInscription
+from transbank.webpay.oneclick.mall_transaction import MallTransaction
+from transbank.common.integration_commerce_codes import IntegrationCommerceCodes
+from transbank.common.integration_type import IntegrationType
+from transbank.common.integration_api_keys import IntegrationApiKeys
+from transbank.common.options import WebpayOptions
+
+import random
+
+
+@bp.route('start', methods=['GET'])
+def show_start():
+    return render_template('/oneclick/deferred/start.html')
+
+
+@bp.route('status', methods=['GET'])
+def show_status():
+    return render_template('/oneclick/deferred/status_form.html')
+
+
+@bp.route('start', methods=['POST'])
+def start():
+    user_name = request.form.get('user_name')
+    email = request.form.get('email')
+    response_url = request.form.get('response_url')
+
+    ins = MallInscription(WebpayOptions(IntegrationCommerceCodes.ONECLICK_MALL_DEFERRED, IntegrationApiKeys.WEBPAY, IntegrationType.TEST))
+    resp = ins.start(
+        username=user_name,
+        email=email,
+        response_url=response_url)
+
+    return render_template('oneclick/deferred/started.html', resp=resp, req=request.form)
+
+
+@bp.route('finish', methods=['GET'])
+def finish():
+    req = request.form
+    token = request.args.get('TBK_TOKEN')
+
+    ins = MallInscription(WebpayOptions(IntegrationCommerceCodes.ONECLICK_MALL_DEFERRED, IntegrationApiKeys.WEBPAY, IntegrationType.TEST))
+    resp = ins.finish(token)
+    buy_order_1 = str(random.randrange(1000000, 99999999))
+    buy_order_2 = str(random.randrange(1000000, 99999999))
+    buy_order = str(random.randrange(1000000, 99999999))
+    commerce_code_1 = IntegrationCommerceCodes.ONECLICK_MALL_DEFERRED_CHILD1
+    commerce_code_2 = IntegrationCommerceCodes.ONECLICK_MALL_DEFERRED_CHILD2
+    return render_template('oneclick/deferred/authorize.html', req=req, resp=resp, buy_order_1=buy_order_1,
+                           buy_order_2=buy_order_2, buy_order=buy_order, token=token, commerce_code_1=commerce_code_1,
+                           commerce_code_2=commerce_code_2)
+
+@bp.route('finish', methods=['POST'])
+def finish_error():
+    req = request.form
+    token = request.form.get('TBK_TOKEN')
+
+    ins = MallInscription(WebpayOptions(IntegrationCommerceCodes.ONECLICK_MALL_DEFERRED, IntegrationApiKeys.WEBPAY, IntegrationType.TEST))
+    resp = ins.finish(token=token)
+    buy_order_1 = str(random.randrange(1000000, 99999999))
+    buy_order_2 = str(random.randrange(1000000, 99999999))
+    buy_order = str(random.randrange(1000000, 99999999))
+    commerce_code_1 = IntegrationCommerceCodes.ONECLICK_MALL_DEFERRED_CHILD1
+    commerce_code_2 = IntegrationCommerceCodes.ONECLICK_MALL_DEFERRED_CHILD2
+    return render_template('oneclick/deferred/authorize.html', req=req, resp=resp, buy_order_1=buy_order_1,
+                           buy_order_2=buy_order_2, buy_order=buy_order, token=token, commerce_code_1=commerce_code_1,
+                           commerce_code_2=commerce_code_2)
+
+@bp.route('delete', methods=['POST'])
+def delete():
+    req = request.form
+
+    tbk_user = request.form.get('tbk_user')
+    user_name = request.form.get('user_name')
+
+    try:
+        ins = MallInscription(WebpayOptions(IntegrationCommerceCodes.ONECLICK_MALL_DEFERRED, IntegrationApiKeys.WEBPAY, IntegrationType.TEST))
+        resp = ins.delete(tbk_user, user_name)
+        return render_template('oneclick/deferred/deleted.html', req=req, resp=resp)
+    except TransbankError as e:
+        print("ERROR_MESSAGE: {}".format(e.message))
+
+@bp.route('authorize', methods=['POST'])
+def authorize():
+    req = request.form
+    tbk_user = request.form.get('tbk_user')
+    user_name = request.form.get('user_name')
+    buy_order = request.form.get('buy_order')
+    token_inscription = request.form.get('token_inscription')
+
+    commerce_code = request.form.get('details[0][commerce_code]')
+    buy_order_child = request.form.get('details[0][buy_order]')
+    installments_number = request.form.get('details[0][installments_number]')
+    amount = request.form.get('details[0][amount]')
+
+    commerce_code2 = request.form.get('details[1][commerce_code]')
+    buy_order_child2 = request.form.get('details[1][buy_order]')
+    installments_number2 = request.form.get('details[1][installments_number]')
+    amount2 = request.form.get('details[1][amount]')
+
+    details = MallTransactionAuthorizeDetails(commerce_code, buy_order_child, installments_number, amount) \
+        .add(commerce_code2, buy_order_child2, installments_number2, amount2)
+
+    tx = MallTransaction(WebpayOptions(IntegrationCommerceCodes.ONECLICK_MALL_DEFERRED, IntegrationApiKeys.WEBPAY, IntegrationType.TEST))
+    response = tx.authorize(username=user_name, tbk_user=tbk_user, parent_buy_order=buy_order, details=details)
+    return render_template('oneclick/deferred/authorized.html', request=req, response=response, details=details.details, buy_order=buy_order,
+                           tbk_user=tbk_user)
+
+
+@bp.route('refund', methods=['POST'])
+def refund():
+    req = request.form
+    buy_order = request.form.get('buy_order')
+    child_commerce_code = request.form.get('child_commerce_code')
+    child_buy_order = request.form.get('child_buy_order')
+    amount = request.form.get('amount')
+    tbk_user = request.form.get('tbk_user')
+    tx = MallTransaction(WebpayOptions(IntegrationCommerceCodes.ONECLICK_MALL_DEFERRED, IntegrationApiKeys.WEBPAY, IntegrationType.TEST))
+    resp = tx.refund(buy_order, child_commerce_code, child_buy_order, amount)
+    return render_template('oneclick/deferred/delete.html', req=req, resp=resp, tbk_user=tbk_user)
+
+
+@bp.route('status', methods=['POST'])
+def status():
+    buy_order = request.form.get('buy_order')
+    tx = MallTransaction(WebpayOptions(IntegrationCommerceCodes.ONECLICK_MALL_DEFERRED, IntegrationApiKeys.WEBPAY, IntegrationType.TEST))
+    resp = tx.status(buy_order)
+
+    return render_template('oneclick/deferred/status.html', resp=resp, req=request.form)
+
+@bp.route('increase_amount', methods=['POST'])
+def increase_amount():
+    buy_order = request.form.get('buy_order')
+    authorization_code = request.form.get('authorization_code')
+    amount = request.form.get('amount')
+    commerce_code = request.form.get('commerce_code')
+    tx = MallTransaction(WebpayOptions(IntegrationCommerceCodes.ONECLICK_MALL_DEFERRED, IntegrationApiKeys.WEBPAY, IntegrationType.TEST))
+    response = tx.increaseAmount(buy_order, authorization_code, amount, commerce_code)
+    request_data = {
+        "buy_order": buy_order,
+        "authorization_code": authorization_code,
+        "amount": amount,
+        "commerce_code": commerce_code
+    }
+    return render_template('oneclick/deferred/increase_amount.html', request= request_data, response=response)
+
+@bp.route('reverse_preauthorized_amount', methods=['POST'])
+def reverse_preauthorized_amount():
+    buy_order = request.form.get('buy_order')
+    authorization_code = request.form.get('authorization_code')
+    amount = request.form.get('amount')
+    commerce_code = request.form.get('commerce_code')
+    tx = MallTransaction(WebpayOptions(IntegrationCommerceCodes.ONECLICK_MALL_DEFERRED, IntegrationApiKeys.WEBPAY, IntegrationType.TEST))
+    response = tx.reversePreAuthorizedAmount(buy_order, authorization_code, amount, commerce_code)
+    request_data = {
+        "buy_order": buy_order,
+        "authorization_code": authorization_code,
+        "amount": amount,
+        "commerce_code": commerce_code
+    }
+    return render_template('oneclick/deferred/reverse_preauthorized_amount.html', request= request_data, response=response)
+
+@bp.route('increase_date', methods=['POST'])
+def increase_date():
+    buy_order = request.form.get('buy_order')
+    authorization_code = request.form.get('authorization_code')
+    commerce_code = request.form.get('commerce_code')
+    tx = MallTransaction(WebpayOptions(IntegrationCommerceCodes.ONECLICK_MALL_DEFERRED, IntegrationApiKeys.WEBPAY, IntegrationType.TEST))
+    response = tx.increaseAuthorizationDate(buy_order, authorization_code, commerce_code)
+    request_data = {
+        "buy_order": buy_order,
+        "authorization_code": authorization_code,
+        "commerce_code": commerce_code
+    }
+    return render_template('oneclick/deferred/increase_date.html', request= request_data, response=response)
+
+@bp.route('history', methods=['POST'])
+def history():
+    buy_order = request.form.get('buy_order')
+    authorization_code = request.form.get('authorization_code')
+    commerce_code = request.form.get('commerce_code')
+    tx = MallTransaction(WebpayOptions(IntegrationCommerceCodes.ONECLICK_MALL_DEFERRED, IntegrationApiKeys.WEBPAY, IntegrationType.TEST))
+    response = tx.deferredCaptureHistory(authorization_code, buy_order, commerce_code)
+    request_data = {
+        "buy_order": buy_order,
+        "authorization_code": authorization_code,
+        "commerce_code": commerce_code
+    }
+    return render_template('oneclick/deferred/history.html', request= request_data, response=response)
+
+@bp.route('capture', methods=['POST'])
+def capture():
+    buy_order = request.form.get('buy_order')
+    authorization_code = request.form.get('authorization_code')
+    commerce_code = request.form.get('commerce_code')
+    capture_amount = request.form.get('capture_amount')
+    tx = MallTransaction(WebpayOptions(IntegrationCommerceCodes.ONECLICK_MALL_DEFERRED, IntegrationApiKeys.WEBPAY, IntegrationType.TEST))
+    response = tx.capture(commerce_code, buy_order, authorization_code, capture_amount)
+    request_data = {
+        "buy_order": buy_order,
+        "authorization_code": authorization_code,
+        "commerce_code": commerce_code,
+        "capture_amount": capture_amount
+    }
+    return render_template('oneclick/deferred/capture.html', request= request_data, response=response)
