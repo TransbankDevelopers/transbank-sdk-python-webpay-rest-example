@@ -25,10 +25,6 @@
     {{ response }}
 </div>
 <br>
-    <div class="alert alert-success" role="alert">
-        <p>Sesion iniciada con exito en Webpay patpass</p>
-    </div>
-<br>
 <form action="{{ response.url }}" method="POST">
 <input type="hidden" name="token_ws" value="{{ response.token }}">
 <input type="submit" value="Ejecutar Pago con Webpay">
