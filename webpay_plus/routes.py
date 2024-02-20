@@ -71,3 +71,16 @@ def webpay_plus_refund():
 @bp.route("refund-form", methods=["GET"])
 def webpay_plus_refund_form():
     return render_template("webpay/plus/refund-form.html")
+
+
+@bp.route('status-form', methods=['GET'])
+def show_create():
+    return render_template('webpay/plus/status-form.html')
+
+
+@bp.route('status', methods=['POST'])
+def status():
+    token_ws = request.form.get('token_ws')
+    tx = Transaction()
+    resp = tx.status(token_ws)
+    return render_template('webpay/plus/status.html', response=resp, token=token_ws, req=request.form)
