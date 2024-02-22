@@ -22,4 +22,4 @@ If you don't want to use docker, you can run the example project by following th
 - Execute the command python3 -m venv venv
 - Activate the virtual environment with source venv/bin/activate
 - Install the dependencies with pip install transbank-sdk
-- Run the example with python app-alt.py
+- Run the example with python `__init__.py`
