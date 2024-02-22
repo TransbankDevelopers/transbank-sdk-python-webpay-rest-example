@@ -90,10 +90,20 @@ def commit():
                               details=details)
     return render_template('/transaccion_completa_mall/transaction_committed.html', req=req, resp=resp)
 
+@bp.route('refund-form', methods=['GET'])
+def refund_form():
+    return render_template('/transaccion_completa_mall/refund-form.html')
 
-@bp.route('status/<token>', methods=['GET'])
-def status(token):
+
+@bp.route("status-form", methods=["GET"])
+def status_form():
+    return render_template("/transaccion_completa_mall/status-form.html")
+
+
+@bp.route('status', methods=['POST'])
+def status():
     req = request.form
+    token = req.get("token")
     tx = MallTransaction()
     resp = tx.status(token=token)
     return render_template('/transaccion_completa_mall/transaction_status.html', req=req, resp=resp)
