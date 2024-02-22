@@ -19,7 +19,7 @@ machine
 
 If you don't want to use docker, you can run the example project by following these steps:
 
-- Execute the command python3 -m venv venv
-- Activate the virtual environment with source venv/bin/activate
-- Install the dependencies with pip install transbank-sdk
+- Execute the command `python3 -m venv venv`
+- Activate the virtual environment with `source venv/bin/activate`
+- Install the dependencies with `pip install -r requirements.txt`
 - Run the example with python `__init__.py`
