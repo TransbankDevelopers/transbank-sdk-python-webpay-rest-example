@@ -84,3 +84,4 @@ def status():
     tx = Transaction()
     resp = tx.status(token_ws)
     return render_template('webpay/plus/status.html', response=resp, token=token_ws, req=request.form)
+    
