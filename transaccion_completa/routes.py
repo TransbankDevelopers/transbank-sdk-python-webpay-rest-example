@@ -53,20 +53,29 @@ def commit():
                               grace_period=grace_period)
     return render_template('transaccion_completa/transaction_committed.html', req=req, resp=resp)
 
+@bp.route('status-form', methods=['GET'])
+def status_form():
+    return render_template('transaccion_completa/status-form.html')
 
-@bp.route('status/<token>', methods=['GET'])
-def status(token):
+@bp.route('status', methods=['POST'])
+def status():
     req = request.form
+    token = req.get('token_ws')
     tx = Transaction()
     resp = tx.status(token=token)
     return render_template('transaccion_completa/transaction_status.html', req=req, resp=resp)
+
+
+@bp.route('refund-form', methods=['GET'])
+def refund_form():
+    return render_template('transaccion_completa/refund-form.html')
 
 
 @bp.route('refund', methods=['POST'])
 def refund():
     req = request.form
     token = req.get('token')
-    amount = req.get('amount')
+    amount = req.get('amount')    
     tx = Transaction()
     resp = tx.refund(token=token, amount=amount)
-    return render_template('transaccion_completa/transaction_refunded.html', req=req, resp=resp)
+    return render_template('transaccion_completa/transaction_refunded.html', req=req, resp=resp, token=token, amount=amount)
