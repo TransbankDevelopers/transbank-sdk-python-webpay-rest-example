@@ -1,40 +1,43 @@
 <html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Ejemplos Patpass Comercio - Transaccion Inscripcion</title>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Ejemplos Patpass Comercio - Transaccion Inscripci&oacute;n</title>
     {% include 'include/header.html' %}
-</head>
+  </head>
 
-<body class="container">
+  <body class="container">
     <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="#">Ejemplos Patpass Comercio - Transaccion Inscripcion</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Step: <strong>Inscripcion</strong></li>
-    </ol>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="#"
+            >Ejemplos Patpass Comercio - Transaccion Inscripci&oacute;n</a
+          >
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+          Step: <strong>Inscripci&oacute;n</strong>
+        </li>
+      </ol>
     </nav>
 
-
     <div class="alert alert-warning" role="alert">
-    <h3>request</h3>
-        {% for k, v in request.items() %}
-            {{ k }} = {{ v }},
-        {% endfor %}
-</div>
-    <div class="alert alert-primary" role="alert">
-    <h3>result</h3>
-    {{ response }}
-</div>
-<br>
-    <div class="alert alert-success" role="alert">
-        <p>Sesion iniciada con exito en Patpass Comercio</p>
+      <h3>request</h3>
+      {% for k, v in request.items() %} {{ k }} = {{ v }}, {% endfor %}
     </div>
-<br>
-<form action="{{ response.url }}" method="POST">
-<input type="hidden" name="tokenComercio" value="{{ response.token }}">
-<input type="submit" value="Iniciar Inscripcion">
-</form>
-<br>
+    <div class="alert alert-primary" role="alert">
+      <h3>result</h3>
+      {{ response }}
+    </div>
+    <br />
+    <div class="alert alert-success" role="alert">
+      <p>Sesion iniciada con exito en Patpass Comercio</p>
+    </div>
+    <br />
+    <form action="{{ response.url }}" method="POST">
+      <input type="hidden" name="tokenComercio" value="{{ response.token }}" />
+      <input type="submit" value="Iniciar Inscripci&oacute;n" />
+    </form>
+    <br />
 
-<a href="/">&laquo; volver a index</a>
-</body>
+    <a href="/">&laquo; volver a index</a>
+  </body>
 </html>

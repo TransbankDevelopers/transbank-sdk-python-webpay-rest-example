@@ -1,4 +1,4 @@
-<h1>Ejemplo transaccion completa Mall diferida - cuotas consultadas</h1>
+<h1>Ejemplo Transacci&oacute;n Completa Mall diferida - cuotas consultadas</h1>
 
 <h2>Request</h2>
 {{ req }}
@@ -7,29 +7,45 @@
 {{ resp }}
 
 <h1>Confirmar transacción</h1>
-<form class="transaccion_completa_form" action="/mallfulltransaction-deferred/commit" method="post" style="display: flex; flex-direction:column; width:50%;font-size: 20px;">
-
+<form
+  class="transaccion_completa_form"
+  action="/mallfulltransaction-deferred/commit"
+  method="post"
+  style="display: flex; flex-direction: column; width: 50%; font-size: 20px"
+>
   <label for="token">Token</label>
-  <input name="token" value="{{ req.get('token') }}">
+  <input name="token" value="{{ req.get('token') }}" />
 
   <h3>Comercio 1</h3>
-  <hr>
+  <hr />
 
   <label for="etails_commerce_code_1">Codigo de comercio (comercio hijo)</label>
-  <input id="details_commerce_code_1" name="details[0][commerce_code]" value="{{ details[0]['commerce_code'] }}">
+  <input
+    id="details_commerce_code_1"
+    name="details[0][commerce_code]"
+    value="{{ details[0]['commerce_code'] }}"
+  />
 
   <label for="details_buy_order_1">Orden de compra (comercio hijo)</label>
-  <input id="details_buy_order_1" name="details[0][buy_order]" value="{{ details[0]['buy_order'] }}"/>
+  <input
+    id="details_buy_order_1"
+    name="details[0][buy_order]"
+    value="{{ details[0]['buy_order'] }}"
+  />
 
   <label for="id_query_installments_1">Id query installments</label>
-  <input id="id_query_installments_1" name="details[0][id_query_installments]" value="{{ resp[0].id_query_installments }}">
+  <input
+    id="id_query_installments_1"
+    name="details[0][id_query_installments]"
+    value="{{ resp[0].id_query_installments }}"
+  />
 
   <label for="deferred_period_index_1">Deferred period index</label>
   <select name="details[0][deferred_period_index]" id="deferred_period_index_1">
     <option value="" selected></option>
-      {% for per in resp[0].deferred_periods %}
-        <option selected value="{{ per }}">{{ per }}</option>
-      {% endfor %}
+    {% for per in resp[0].deferred_periods %}
+    <option selected value="{{ per }}">{{ per }}</option>
+    {% endfor %}
   </select>
 
   <label for="grace_period_1">Periodo de gracia</label>
@@ -39,24 +55,35 @@
   </select>
 
   <h3>Comercio 2</h3>
-  <hr>
+  <hr />
 
   <label for="etails_commerce_code_2">Codigo de comercio (comercio hijo)</label>
-  <input id="details_commerce_code_2" name="details[1][commerce_code]" value="{{ details[1]['commerce_code'] }}">
+  <input
+    id="details_commerce_code_2"
+    name="details[1][commerce_code]"
+    value="{{ details[1]['commerce_code'] }}"
+  />
 
   <label for="details_buy_order_2">Orden de compra (comercio hijo)</label>
-  <input id="details_buy_order_2" name="details[1][buy_order]" value="{{ details[1]['buy_order'] }}"/>
-
+  <input
+    id="details_buy_order_2"
+    name="details[1][buy_order]"
+    value="{{ details[1]['buy_order'] }}"
+  />
 
   <label for="id_query_installments">Id query installments</label>
-  <input id="id_query_installments_2" name="details[1][id_query_installments]" value="{{ resp[1].id_query_installments }}">
+  <input
+    id="id_query_installments_2"
+    name="details[1][id_query_installments]"
+    value="{{ resp[1].id_query_installments }}"
+  />
 
   <label for="deferred_period_index_2">Deferred period index</label>
   <select name="details[1][deferred_period_index]" id="deferred_period_index_2">
     <option value="" selected></option>
-      {% for per in resp[1].deferred_periods %}
-        <option selected value="{{ per }}">{{ per }}</option>
-      {% endfor %}
+    {% for per in resp[1].deferred_periods %}
+    <option selected value="{{ per }}">{{ per }}</option>
+    {% endfor %}
   </select>
 
   <label for="grace_period_2">Periodo de gracia</label>
@@ -66,5 +93,4 @@
   </select>
 
   <button type="submit">Enviar</button>
-
 </form>
