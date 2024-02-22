@@ -45,13 +45,7 @@ def installments():
     deferred_period_index = 1
     grace_period = 'false'
     commit = tx.commit(token, id_query_installments, deferred_period_index, grace_period)
-    request_data = {
-        "token": token,
-        "id_query_installments": id_query_installments,
-        "deferred_period_index": deferred_period_index,
-        "grace_period": grace_period
-    }
-    return render_template('transaccion_completa/deferred/commit.html', request= request_data, response=commit)
+    return render_template('transaccion_completa/deferred/commit.html', request=commit, response=commit, token=token)
 
 @bp.route('status', methods=['POST'])
 def status():
@@ -63,74 +57,13 @@ def status():
     }
     return render_template('transaccion_completa/deferred/status.html', request= request_data, response=response)
 
-@bp.route('increase_date', methods=['POST'])
-def increase_date():
-    commerce_code = IntegrationCommerceCodes.TRANSACCION_COMPLETA_DEFERRED
-    token = request.form.get('token')
-    buy_order = request.form.get('buy_order')
-    authorization_code = request.form.get('authorization_code')
-    tx = Transaction(WebpayOptions(IntegrationCommerceCodes.TRANSACCION_COMPLETA_DEFERRED, IntegrationApiKeys.WEBPAY, IntegrationType.TEST))
-    response = tx.increaseAuthorizationDate(token, buy_order, authorization_code, commerce_code)
-    request_data = {
-        "token": token,
-        "buy_order": buy_order,
-        "authorization_code": authorization_code,
-        "commerce_code": commerce_code
-    }
-    return render_template('transaccion_completa/deferred/increase_date.html', request= request_data, response=response)
-
-@bp.route('increase_amount', methods=['POST'])
-def increase_amount():
-    commerce_code = IntegrationCommerceCodes.TRANSACCION_COMPLETA_DEFERRED
-    token = request.form.get('token')
-    buy_order = request.form.get('buy_order')
-    authorization_code = request.form.get('authorization_code')
-    amount = 1000
-    tx = Transaction(WebpayOptions(IntegrationCommerceCodes.TRANSACCION_COMPLETA_DEFERRED, IntegrationApiKeys.WEBPAY, IntegrationType.TEST))
-    response = tx.increaseAmount(token, buy_order, authorization_code, amount, commerce_code)
-    request_data = {
-        "commerce_code": commerce_code,
-        "token": token,
-        "buy_order": buy_order,
-        "authorization_code": authorization_code,
-        "amount": amount
-    }
-    return render_template('transaccion_completa/deferred/increase_amount.html', request= request_data, response=response)
-
-@bp.route('reverse_amount', methods=['POST'])
-def reverse_amount():
-    commerce_code = IntegrationCommerceCodes.TRANSACCION_COMPLETA_DEFERRED
-    token = request.form.get('token')
-    buy_order = request.form.get('buy_order')
-    authorization_code = request.form.get('authorization_code')
-    amount = 1000
-    tx = Transaction(WebpayOptions(IntegrationCommerceCodes.TRANSACCION_COMPLETA_DEFERRED, IntegrationApiKeys.WEBPAY, IntegrationType.TEST))
-    response = tx.reversePreAuthorizedAmount(token, buy_order, authorization_code, amount, commerce_code)
-    request_data = {
-        "commerce_code": commerce_code,
-        "token": token,
-        "buy_order": buy_order,
-        "authorization_code": authorization_code,
-        "amount": amount
-    }
-    return render_template('transaccion_completa/deferred/reverse_amount.html', request= request_data, response=response)
-
-@bp.route('history', methods=['POST'])
-def history():
-    token = request.form.get('token')
-    tx = Transaction(WebpayOptions(IntegrationCommerceCodes.TRANSACCION_COMPLETA_DEFERRED, IntegrationApiKeys.WEBPAY, IntegrationType.TEST))
-    response = tx.deferredCaptureHistory(token)
-    request_data = {
-        "token": token
-    }
-    return render_template('transaccion_completa/deferred/history.html', request= request_data, response=response)
-
 @bp.route('capture', methods=['POST'])
 def capture():
-    token = request.form.get('token')
-    buy_order = request.form.get('buy_order')
-    authorization_code = request.form.get('authorization_code')
-    capture_amount = request.form.get('capture_amount')
+    req = request.form
+    token = req.get('token')
+    buy_order = req.get('buy_order')
+    authorization_code = req.get('authorization_code')
+    capture_amount = req.get('capture_amount')
     tx = Transaction(WebpayOptions(IntegrationCommerceCodes.TRANSACCION_COMPLETA_DEFERRED, IntegrationApiKeys.WEBPAY, IntegrationType.TEST))
     response = tx.capture(token, buy_order, authorization_code, capture_amount)
     request_data = {
@@ -140,3 +73,4 @@ def capture():
         "capture_amount": capture_amount
     }
     return render_template('transaccion_completa/deferred/capture.html', request= request_data, response=response)
+    
