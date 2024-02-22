@@ -27,35 +27,7 @@
 
   <button type="submit">Solicitar reembolso</button>
 </form>
-<form class="transaccion_completa_form" action="/mallfulltransaction-deferred/increase_amount" method="POST" style="display: flex; flex-direction:column; width:50%;font-size: 20px;">
-  <input type="hidden" name="token" value="{{ req.get('token') }}">
-  <input type="hidden" name="buy_order" value="{{ resp.details[0]['buy_order'] }}">
-  <input type="hidden" name="authorization_code" value="{{ resp.details[0]['authorization_code'] }}">
-  <input type="hidden" name="amount" value="{{ resp.details[0]['amount'] }}">
-  <input type="hidden" name="commerce_code" value="{{ resp.details[0]['commerce_code'] }}">
-  <input type="submit" value="Incrementar monto">
-</form>
-<form class="transaccion_completa_form" action="/mallfulltransaction-deferred/reverse_amount" method="POST" style="display: flex; flex-direction:column; width:50%;font-size: 20px;">
-  <input type="hidden" name="token" value="{{ req.get('token') }}">
-  <input type="hidden" name="buy_order" value="{{ resp.details[0]['buy_order'] }}">
-  <input type="hidden" name="authorization_code" value="{{ resp.details[0]['authorization_code'] }}">
-  <input type="hidden" name="amount" value="{{ resp.details[0]['amount'] }}">
-  <input type="hidden" name="commerce_code" value="{{ resp.details[0]['commerce_code'] }}">
-  <input type="submit" value="Reversa monto">
-</form>
-<form class="transaccion_completa_form" action="/mallfulltransaction-deferred/increase_date" method="POST" style="display: flex; flex-direction:column; width:50%;font-size: 20px;">
-  <input type="hidden" name="token" value="{{ req.get('token') }}">
-  <input type="hidden" name="buy_order" value="{{ resp.details[0]['buy_order'] }}">
-  <input type="hidden" name="authorization_code" value="{{ resp.details[0]['authorization_code'] }}">
-  <input type="hidden" name="commerce_code" value="{{ resp.details[0]['commerce_code'] }}">
-  <input type="submit" value="Incrementar fecha expiracion">
-</form>
-<form class="transaccion_completa_form" action="/mallfulltransaction-deferred/history" method="POST" style="display: flex; flex-direction:column; width:50%;font-size: 20px;">
-  <input type="hidden" name="token" value="{{ req.get('token')}}">
-  <input type="hidden" name="buy_order" value="{{ resp.details[0]['buy_order'] }}">
-  <input type="hidden" name="commerce_code" value="{{ resp.details[0]['commerce_code'] }}">
-  <input type="submit" value="Historial">
-</form>
+
 <form class="transaccion_completa_form" action="/mallfulltransaction-deferred/capture" method="POST" style="display: flex; flex-direction:column; width:50%;font-size: 20px;">
   <input type="hidden" name="token" value="{{ req.get('token')}}">
   <input type="hidden" name="buy_order" value="{{ resp.details[0]['buy_order'] }}">
@@ -83,36 +55,7 @@
 
   <button type="submit">Solicitar reembolso</button>
 </form>
-</form>
-<form class="transaccion_completa_form" action="/mallfulltransaction-deferred/increase_amount" method="POST" style="display: flex; flex-direction:column; width:50%;font-size: 20px;">
-  <input type="hidden" name="token" value="{{ req.get('token') }}">
-  <input type="hidden" name="buy_order" value="{{ resp.details[1]['buy_order'] }}">
-  <input type="hidden" name="authorization_code" value="{{ resp.details[1]['authorization_code'] }}">
-  <input type="hidden" name="amount" value="{{ resp.details[1]['amount'] }}">
-  <input type="hidden" name="commerce_code" value="{{ resp.details[1]['commerce_code'] }}">
-  <input type="submit" value="Incrementar monto">
-</form>
-<form class="transaccion_completa_form" action="/mallfulltransaction-deferred/reverse_amount" method="POST" style="display: flex; flex-direction:column; width:50%;font-size: 20px;">
-  <input type="hidden" name="token" value="{{ req.get('token') }}">
-  <input type="hidden" name="buy_order" value="{{ resp.details[1]['buy_order'] }}">
-  <input type="hidden" name="authorization_code" value="{{ resp.details[1]['authorization_code'] }}">
-  <input type="hidden" name="amount" value="{{ resp.details[1]['amount'] }}">
-  <input type="hidden" name="commerce_code" value="{{ resp.details[1]['commerce_code'] }}">
-  <input type="submit" value="Reversa monto">
-</form>
-<form class="transaccion_completa_form" action="/mallfulltransaction-deferred/increase_date" method="POST" style="display: flex; flex-direction:column; width:50%;font-size: 20px;">
-  <input type="hidden" name="token" value="{{ req.get('token') }}">
-  <input type="hidden" name="buy_order" value="{{ resp.details[1]['buy_order'] }}">
-  <input type="hidden" name="authorization_code" value="{{ resp.details[1]['authorization_code'] }}">
-  <input type="hidden" name="commerce_code" value="{{ resp.details[1]['commerce_code'] }}">
-  <input type="submit" value="Incrementar fecha expiracion">
-</form>
-<form class="transaccion_completa_form" action="/mallfulltransaction-deferred/history" method="POST" style="display: flex; flex-direction:column; width:50%;font-size: 20px;">
-  <input type="hidden" name="token" value="{{ req.get('token')}}">
-  <input type="hidden" name="buy_order" value="{{ resp.details[1]['buy_order'] }}">
-  <input type="hidden" name="commerce_code" value="{{ resp.details[1]['commerce_code'] }}">
-  <input type="submit" value="Historial">
-</form>
+
 <form class="transaccion_completa_form" action="/mallfulltransaction-deferred/capture" method="POST" style="display: flex; flex-direction:column; width:50%;font-size: 20px;">
   <input type="hidden" name="token" value="{{ req.get('token')}}">
   <input type="hidden" name="buy_order" value="{{ resp.details[1]['buy_order'] }}">
