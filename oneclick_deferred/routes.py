@@ -54,6 +54,7 @@ def finish():
                            buy_order_2=buy_order_2, buy_order=buy_order, token=token, commerce_code_1=commerce_code_1,
                            commerce_code_2=commerce_code_2)
 
+
 @bp.route('finish', methods=['POST'])
 def finish_error():
     req = request.form
@@ -70,6 +71,7 @@ def finish_error():
                            buy_order_2=buy_order_2, buy_order=buy_order, token=token, commerce_code_1=commerce_code_1,
                            commerce_code_2=commerce_code_2)
 
+
 @bp.route('delete', methods=['POST'])
 def delete():
     req = request.form
@@ -83,6 +85,7 @@ def delete():
         return render_template('oneclick/deferred/deleted.html', req=req, resp=resp)
     except TransbankError as e:
         print("ERROR_MESSAGE: {}".format(e.message))
+
 
 @bp.route('authorize', methods=['POST'])
 def authorize():
@@ -132,65 +135,6 @@ def status():
 
     return render_template('oneclick/deferred/status.html', resp=resp, req=request.form)
 
-@bp.route('increase_amount', methods=['POST'])
-def increase_amount():
-    buy_order = request.form.get('buy_order')
-    authorization_code = request.form.get('authorization_code')
-    amount = request.form.get('amount')
-    commerce_code = request.form.get('commerce_code')
-    tx = MallTransaction(WebpayOptions(IntegrationCommerceCodes.ONECLICK_MALL_DEFERRED, IntegrationApiKeys.WEBPAY, IntegrationType.TEST))
-    response = tx.increaseAmount(buy_order, authorization_code, amount, commerce_code)
-    request_data = {
-        "buy_order": buy_order,
-        "authorization_code": authorization_code,
-        "amount": amount,
-        "commerce_code": commerce_code
-    }
-    return render_template('oneclick/deferred/increase_amount.html', request= request_data, response=response)
-
-@bp.route('reverse_preauthorized_amount', methods=['POST'])
-def reverse_preauthorized_amount():
-    buy_order = request.form.get('buy_order')
-    authorization_code = request.form.get('authorization_code')
-    amount = request.form.get('amount')
-    commerce_code = request.form.get('commerce_code')
-    tx = MallTransaction(WebpayOptions(IntegrationCommerceCodes.ONECLICK_MALL_DEFERRED, IntegrationApiKeys.WEBPAY, IntegrationType.TEST))
-    response = tx.reversePreAuthorizedAmount(buy_order, authorization_code, amount, commerce_code)
-    request_data = {
-        "buy_order": buy_order,
-        "authorization_code": authorization_code,
-        "amount": amount,
-        "commerce_code": commerce_code
-    }
-    return render_template('oneclick/deferred/reverse_preauthorized_amount.html', request= request_data, response=response)
-
-@bp.route('increase_date', methods=['POST'])
-def increase_date():
-    buy_order = request.form.get('buy_order')
-    authorization_code = request.form.get('authorization_code')
-    commerce_code = request.form.get('commerce_code')
-    tx = MallTransaction(WebpayOptions(IntegrationCommerceCodes.ONECLICK_MALL_DEFERRED, IntegrationApiKeys.WEBPAY, IntegrationType.TEST))
-    response = tx.increaseAuthorizationDate(buy_order, authorization_code, commerce_code)
-    request_data = {
-        "buy_order": buy_order,
-        "authorization_code": authorization_code,
-        "commerce_code": commerce_code
-    }
-    return render_template('oneclick/deferred/increase_date.html', request= request_data, response=response)
-
-@bp.route('history', methods=['POST'])
-def history():
-    buy_order = request.form.get('buy_order')
-    authorization_code = request.form.get('authorization_code')
-    commerce_code = request.form.get('commerce_code')
-    tx = MallTransaction(WebpayOptions(IntegrationCommerceCodes.ONECLICK_MALL_DEFERRED, IntegrationApiKeys.WEBPAY, IntegrationType.TEST))
-    response = tx.deferredCaptureHistory(authorization_code, buy_order, commerce_code)
-    request_data = {
-        "buy_order": buy_order,
-        "authorization_code": authorization_code,
-        "commerce_code": commerce_code
-    }
-    return render_template('oneclick/deferred/history.html', request= request_data, response=response)
 
 @bp.route('capture', methods=['POST'])
 def capture():
@@ -207,3 +151,4 @@ def capture():
         "capture_amount": capture_amount
     }
     return render_template('oneclick/deferred/capture.html', request= request_data, response=response)
+    
