@@ -46,36 +46,6 @@
 <input type="submit" class="btn btn-success" value="Anular pago">
 </form>
 
-<form action="/oneclick-mall-deferred/increase_amount" method="POST">
-    <input type="hidden" name="buy_order" value="{{ response.details[0].buy_order }}">
-    <input type="hidden" name="authorization_code" value="{{ response.details[0].authorization_code }}">
-    <input type="hidden" name="amount" value="{{ response.details[0].amount }}">
-    <input type="hidden" name="commerce_code" value="{{ response.details[0].commerce_code }}">
-    <input type="submit" class="btn btn-success" value="Incrementar monto">
-</form>
-
-<form action="/oneclick-mall-deferred/reverse_preauthorized_amount" method="POST">
-    <input type="hidden" name="buy_order" value="{{ response.details[0].buy_order }}">
-    <input type="hidden" name="authorization_code" value="{{ response.details[0].authorization_code }}">
-    <input type="hidden" name="amount" value="{{ response.details[0].amount }}">
-    <input type="hidden" name="commerce_code" value="{{ response.details[0].commerce_code }}">
-    <input type="submit" class="btn btn-success" value="Reversa monto pre autorizado">
-</form>
-
-<form action="/oneclick-mall-deferred/increase_date" method="POST">
-    <input type="hidden" name="buy_order" value="{{ response.details[0].buy_order }}">
-    <input type="hidden" name="authorization_code" value="{{ response.details[0].authorization_code }}">
-    <input type="hidden" name="commerce_code" value="{{ response.details[0].commerce_code }}">
-    <input type="submit" class="btn btn-success" value="Incrementar fecha expiracion">
-</form>
-
-<form action="/oneclick-mall-deferred/history" method="POST">
-    <input type="hidden" name="buy_order" value="{{ response.details[0].buy_order }}">
-    <input type="hidden" name="authorization_code" value="{{ response.details[0].authorization_code }}">
-    <input type="hidden" name="commerce_code" value="{{ response.details[0].commerce_code }}">
-    <input type="submit" class="btn btn-success" value="Historial">
-</form>
-
 <form action="/oneclick-mall-deferred/capture" method="POST">
     <input type="hidden" name="buy_order" value="{{ response.details[0].buy_order }}">
     <input type="hidden" name="authorization_code" value="{{ response.details[0].authorization_code }}">
@@ -106,36 +76,6 @@
 
 
 <input type="submit" class="btn btn-success" value="Anular pago">
-</form>
-
-<form action="/oneclick-mall-deferred/increase_amount" method="POST">
-    <input type="hidden" name="buy_order" value="{{ response.details[1].buy_order }}">
-    <input type="hidden" name="authorization_code" value="{{ response.details[1].authorization_code }}">
-    <input type="hidden" name="amount" value="{{ response.details[1].amount }}">
-    <input type="hidden" name="commerce_code" value="{{ response.details[1].commerce_code }}">
-    <input type="submit" class="btn btn-success" value="Incrementar monto">
-</form>
-
-<form action="/oneclick-mall-deferred/reverse_preauthorized_amount" method="POST">
-    <input type="hidden" name="buy_order" value="{{ response.details[1].buy_order }}">
-    <input type="hidden" name="authorization_code" value="{{ response.details[1].authorization_code }}">
-    <input type="hidden" name="amount" value="{{ response.details[1].amount }}">
-    <input type="hidden" name="commerce_code" value="{{ response.details[1].commerce_code }}">
-    <input type="submit" class="btn btn-success" value="Reversa monto pre autorizado">
-</form>
-
-<form action="/oneclick-mall-deferred/increase_date" method="POST">
-    <input type="hidden" name="buy_order" value="{{ response.details[1].buy_order }}">
-    <input type="hidden" name="authorization_code" value="{{ response.details[1].authorization_code }}">
-    <input type="hidden" name="commerce_code" value="{{ response.details[1].commerce_code }}">
-    <input type="submit" class="btn btn-success" value="Incrementar fecha expiracion">
-</form>
-
-<form action="/oneclick-mall-deferred/history" method="POST">
-    <input type="hidden" name="buy_order" value="{{ response.details[1].buy_order }}">
-    <input type="hidden" name="authorization_code" value="{{ response.details[1].authorization_code }}">
-    <input type="hidden" name="commerce_code" value="{{ response.details[1].commerce_code }}">
-    <input type="submit" class="btn btn-success" value="Historial">
 </form>
 
 <form action="/oneclick-mall-deferred/capture" method="POST">
