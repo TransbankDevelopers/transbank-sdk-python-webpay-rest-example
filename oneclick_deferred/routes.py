@@ -14,8 +14,11 @@ import random
 
 
 @bp.route('start', methods=['GET'])
-def show_start():
-    return render_template('/oneclick/deferred/start.html')
+def show_start():    
+    hostname = request.headers.get('Host')
+    protocol = request.scheme    
+    endpoint = protocol + "://" + hostname + "/oneclick-mall-deferred/finish"
+    return render_template('/oneclick/deferred/start.html', endpoint=endpoint)
 
 
 @bp.route('status', methods=['GET'])

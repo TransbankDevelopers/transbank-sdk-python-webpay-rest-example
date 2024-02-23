@@ -11,7 +11,10 @@ import random
 
 @bp.route('start', methods=['GET'])
 def show_start():
-    return render_template('/oneclick/start.html')
+    hostname = request.headers.get('Host')
+    protocol = request.scheme    
+    endpoint = protocol + "://" + hostname + "/oneclick-mall/finish"
+    return render_template('/oneclick/start.html', endpoint=endpoint)
 
 
 @bp.route('status', methods=['GET'])
