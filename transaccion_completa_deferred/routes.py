@@ -45,7 +45,13 @@ def installments():
     deferred_period_index = 1
     grace_period = 'false'
     commit = tx.commit(token, id_query_installments, deferred_period_index, grace_period)
-    return render_template('transaccion_completa/deferred/commit.html', request=commit, response=commit, token=token)
+    request_data = {
+        "token": token,
+        "id_query_installments": id_query_installments,
+        "deferred_period_index": deferred_period_index,
+        "grace_period": grace_period
+    }   
+    return render_template('transaccion_completa/deferred/commit.html', request=request_data, response=commit, token=token)
 
 @bp.route('status', methods=['POST'])
 def status():
