@@ -1,7 +1,31 @@
-<h1>Ejemplo transacción completa Estado de la transacción</h1>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>
+      Ejemplo Transacci&oacute;n Completa - Status de Transacci&oacute;n
+    </title>
+    {% include 'include/header.html' %}
+  </head>
 
-<h2>Request</h2>
-{{ req }}
-
-<h2>Response</h2>
-{{ resp }}
+  <body class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="#"
+            >Ejemplos Transacci&oacute;n Completa - Status de Transaccionn</a
+          >
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Step: Refund</li>
+      </ol>
+    </nav>
+    <div class="alert alert-warning" role="alert">
+      <h3>Request</h3>
+      {{ req }}
+    </div>
+    <div class="alert alert-primary" role="alert">
+      <h3>Response</h3>
+      {{ resp }}
+    </div>
+    <a href="/">&laquo; volver a index</a>
+  </body>
+</html>

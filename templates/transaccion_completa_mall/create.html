@@ -1,60 +1,80 @@
-
 <body>
-<h1>Ejemplo Transaccion completa mall</h1>
+  <h1>Ejemplo Transacci&oacute;n Completa mall</h1>
 
-<form class="transaccion_completa_form" action="/mallfulltransaction/create" method="post" style="display: flex; flex-direction:column; width:50%;font-size: 20px;">
-  <label for="buy_order">
-    Orden de compra
-  </label>
-  <input id="buy_order" name="buy_order" value="{{ 'buyorder' + dt.utcnow().strftime('%S') }}"/>
+  <form
+    class="transaccion_completa_form"
+    action="/mallfulltransaction/create"
+    method="post"
+    style="display: flex; flex-direction: column; width: 50%; font-size: 20px"
+  >
+    <label for="buy_order"> Orden de compra </label>
+    <input
+      id="buy_order"
+      name="buy_order"
+      value="{{ 'buyorder' + dt.utcnow().strftime('%S') }}"
+    />
 
-  <label for="session_id">
-    Id de sesión
-  </label>
-  <input id="session_id" name="session_id" value="{{ 'session' + dt.utcnow().strftime('%S') }}" />
+    <label for="session_id"> Id de sesión </label>
+    <input
+      id="session_id"
+      name="session_id"
+      value="{{ 'session' + dt.utcnow().strftime('%S') }}"
+    />
 
-  <label for="card_number">
-    Numero de tarjeta
-  </label>
-  <input id="card_number" name="card_number" value="4051885600446623"/>
+    <label for="card_number"> N&uacute;mero de tarjeta </label>
+    <input id="card_number" name="card_number" value="4051885600446623" />
 
-  <label for="card_expiration_date">
-    Fecha de expiracion (AA/MM)
-  </label>
-  <input id="card_expiration_date" name="card_expiration_date" value="{{ (dt.utcnow() + timedelta(days=5 * 365)).strftime("%y/%m") }}" />
+    <label for="card_expiration_date">
+      Fecha de expiraci&oacute;n (AA/MM)
+    </label>
+    <input id="card_expiration_date" name="card_expiration_date" value="{{
+    (dt.utcnow() + timedelta(days=5 * 365)).strftime("%y/%m") }}" />
 
-  <h2>Detalles</h2>
-  <hr>
+    <h2>Detalles</h2>
+    <hr />
 
-  <label for="details_commerce_code">Detalles de transacción 1</label>
-  <select id="details_commerce_code" name="details[0][commerce_code]">
-    <option selected="selected" value="{{ child_commerce_codes[0] }}"> Comercio 1 - Codigo {{ child_commerce_codes[0] }} </option>
-    <option value="{{ child_commerce_codes[1] }}">Comercio 2 - Codigo {{ child_commerce_codes[1] }} </option>
-  </select>
+    <label for="details_commerce_code">Detalles de transacción 1</label>
+    <select id="details_commerce_code" name="details[0][commerce_code]">
+      <option selected="selected" value="{{ child_commerce_codes[0] }}">
+        Comercio 1 - C&oacute;digo {{ child_commerce_codes[0] }}
+      </option>
+      <option value="{{ child_commerce_codes[1] }}">
+        Comercio 2 - C&oacute;digo {{ child_commerce_codes[1] }}
+      </option>
+    </select>
 
+    <label for="details_buy_order">Orden de compra (comercio hijo)</label>
+    <input
+      id="details_buy_order"
+      name="details[0][buy_order]"
+      value="{{ 'abcdef' + dt.utcnow().strftime('%S') }}"
+    />
 
-  <label for="details_buy_order">Orden de compra (comercio hijo)</label>
-  <input id="details_buy_order" name="details[0][buy_order]" value="{{ 'abcdef' + dt.utcnow().strftime('%S') }}"/>
+    <label for="details_amount">Monto</label>
+    <input id="details_amount" name="details[0][amount]" value="1000" />
 
-  <label for="details_amount">Monto</label>
-  <input id="details_amount" name="details[0][amount]" value="1000"/>
+    <hr />
 
-  <hr>
+    <label for="details_commerce_code">Detalles de transacción 2</label>
+    <select id="details_commerce_code" name="details[1][commerce_code]">
+      <option value="{{ child_commerce_codes[0] }}">
+        Comercio 1 - C&oacute;digo {{ child_commerce_codes[0] }}
+      </option>
+      <option selected="selected" value="{{ child_commerce_codes[1] }}">
+        Comercio 2 - C&oacute;digo {{ child_commerce_codes[1] }}
+      </option>
+    </select>
 
-  <label for="details_commerce_code">Detalles de transacción 2</label>
-  <select id="details_commerce_code" name="details[1][commerce_code]">
-    <option value="{{ child_commerce_codes[0] }}"> Comercio 1 - Codigo {{ child_commerce_codes[0] }} </option>
-    <option selected="selected" value="{{ child_commerce_codes[1] }}">Comercio 2 - Codigo {{ child_commerce_codes[1] }} </option>
-  </select>
+    <label for="details_buy_order">Orden de compra (comercio hijo)</label>
+    <input
+      id="details_buy_order"
+      name="details[1][buy_order]"
+      value="{{ 'wxyz' + dt.utcnow().strftime('%S')  }}"
+    />
 
+    <label for="details_amount">Monto</label>
+    <input id="details_amount" name="details[1][amount]" value="2000" />
 
-  <label for="details_buy_order">Orden de compra (comercio hijo)</label>
-  <input id="details_buy_order" name="details[1][buy_order]" value="{{ 'wxyz' + dt.utcnow().strftime('%S')  }}"/>
-
-  <label for="details_amount">Monto</label>
-  <input id="details_amount" name="details[1][amount]" value="2000"/>
-
-  <button type="submit">Aceptar</button>
-</form>
-
+    <button type="submit">Aceptar</button>
+  </form>
 </body>

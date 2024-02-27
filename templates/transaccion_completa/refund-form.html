@@ -1,7 +1,9 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Ejemplo Webpay - Transacci&oacute;n Anulaci&oacute;n</title>
+    <title>
+      Ejemplo Transacci&oacute;n Completa - Transacci&oacute;n Anulaci&oacute;n
+    </title>
     {% include 'include/header.html' %}
   </head>
 
@@ -9,18 +11,21 @@
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
-          <a href="#">Ejemplo Webpay - Transacci&oacute;n Anulaci&oacute;n</a>
+          <a href="#"
+            >Ejemplo Transacci&oacute;n Completa - Transaccion
+            Anulaci&oacute;n</a
+          >
         </li>
       </ol>
     </nav>
 
     <div class="card">
       <div class="card-body col-sm-4">
-        <form id="formulario" action="/webpay-plus/refund" method="POST">
+        <form id="formulario" action="/fulltransaction/refund" method="POST">
           <legend>Formulario de Anulaci&oacute;n</legend>
           <div class="form-group">
             <label>token_ws:</label
-            ><input name="token_ws" type="text" class="form-control" />
+            ><input name="token" type="text" class="form-control" />
           </div>
           <div class="form-group">
             <label>amount:</label

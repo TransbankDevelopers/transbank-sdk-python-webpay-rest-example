@@ -96,3 +96,4 @@ def patpass_webpay_status():
         return render_template("webpay/plus_mall/status.html", token=token, response=response)
     except TransbankError as e:
         print(e.message)
+        
