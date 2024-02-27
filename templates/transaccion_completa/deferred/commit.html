@@ -31,11 +31,11 @@
 
     <form action="/fulltransaction-deferred/capture" method="POST">
       <input type="hidden" name="token" value="{{ token }}" />
-      <input type="hidden" name="buy_order" value="{{ request.buy_order }}" />
+      <input type="hidden" name="buy_order" value="{{ response.buy_order }}" />
       <input
         type="hidden"
         name="authorization_code"
-        value="{{ request.authorization_code }}"
+        value="{{ response.authorization_code }}"
       />
       <input
         type="hidden"
