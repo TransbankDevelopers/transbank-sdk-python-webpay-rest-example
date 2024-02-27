@@ -24,13 +24,15 @@
     <label for="amount"> Monto </label>
     <input id="amount" name="amount" value="1000" />
 
-    <label for="card_number"> Numero de tarjeta </label>
+    <label for="card_number"> N&uacute;mero de tarjeta </label>
     <input id="card_number" name="card_number" value="4051885600446623" />
 
     <label for="cvv"> CVV </label>
     <input id="cvv" name="cvv" value="123" />
 
-    <label for="card_expiration_date"> Fecha de expiracion (AA/MM) </label>
+    <label for="card_expiration_date">
+      Fecha de expiraci&oacute;n (AA/MM)
+    </label>
     <input id="card_expiration_date" name="card_expiration_date" value="{{
     (dt.utcnow() + timedelta(days=5 * 365)).strftime("%y/%m") }}"/>
     <br />
