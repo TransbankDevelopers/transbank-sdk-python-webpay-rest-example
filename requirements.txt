@@ -1,1 +1,1 @@
-transbank-sdk==4.0.0
+transbank-sdk==5.0.0
